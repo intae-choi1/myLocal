@@ -18,3 +18,6 @@ for entry in entries.iterdir():
     if Path(file_path).is_file():
         if check_string(file_path):
             print(file_path)
+
+
+print("byebye")
