@@ -53,7 +53,7 @@ def target_process(run_flag):
     else:
         n_differ = 80
         x, y = 2150, 330 + n_differ*(n_user-1)
-        x2, y2 = x + 120, y + 100
+        x2, y2 = x + 120, y + 110
         x3, y3 = x - 1050, y + 470 - n_differ*(n_user-1)
         x4, y4 = x - 900, y + 500 - n_differ*(n_user-1)
         notebook_delay = 0.5
