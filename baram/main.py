@@ -8,7 +8,7 @@ from pynput.keyboard import (
     Listener as Kl,
 )
 
-from act import (
+from 공통.act import (
     single_key_action_pressed,
     single_key_action, 
     combi_key_action, 
@@ -16,22 +16,21 @@ from act import (
     remove_combi
 )
 
-
+# 눌릴 때 액션 (꾹누르기 포함)
 def on_press(event, lock, controller, stores, combis, physics, key):
-    single_key_action_pressed(event, lock, controller, physics, key)
+    single_key_action_pressed(event, lock, controller, stores, combis, physics, key)
     add_combi(stores, physics, key)
         
-        
 
+# 뗄 때 액션 (단일 명령 및 키조합 명령)
 def on_release(event, lock, controller, stores, combis, physics, key):
     # print(f"{key} release.")
     if key == Key.f4:      # 모든 태스크 종료 & 프로그램 종료
         event.set()
         return False
     
-    single_key_action(event, lock, controller, physics, key)
-    
-    combi_key_action(event, controller, physics, stores, combis)
+    single_key_action(event, lock, controller, stores, combis, physics, key)
+    combi_key_action(event, lock, controller, stores, combis, physics, key)
 
     remove_combi(stores, physics, key)
     
@@ -51,6 +50,7 @@ if __name__ == "__main__":
         '2': set(),
         '3': set(),
         '4': set(),
+        '5': set(),
         'e': set(),
     }
     combis = {
@@ -58,6 +58,7 @@ if __name__ == "__main__":
         '2': {KeyCode(char='2')},
         '3': {KeyCode(char='3')},
         '4': {KeyCode(char='4')},
+        '5': {KeyCode(char='5')},
         'e': {KeyCode(char='e')},
     }
     physics = {
