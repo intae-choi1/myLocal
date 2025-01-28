@@ -8,13 +8,22 @@ from pynput.keyboard import (
     Listener as Kl,
 )
 
-from 공통.act import (
+from 도사.act import (
     single_key_action_pressed,
     single_key_action, 
     combi_key_action, 
     add_combi, 
     remove_combi
 )
+
+# from 주술사.act import (
+#     single_key_action_pressed,
+#     single_key_action, 
+#     combi_key_action, 
+#     add_combi, 
+#     remove_combi
+# )
+
 
 # 눌릴 때 액션 (꾹누르기 포함)
 def on_press(event, lock, controller, stores, combis, physics, key):

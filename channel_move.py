@@ -39,7 +39,7 @@ def on_release(key):
 def target_process(run_flag):
     pag.FAILSAFE = False
     is_notebook = False
-    is_vm = True
+    is_vm = False
     # n번째 유저
     n_user = 1
     
