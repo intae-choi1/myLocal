@@ -6,16 +6,17 @@ from pynput.keyboard import (
     KeyCode,
 )
 
-from .job import (
+from 공통.job import (
     king_click,
-    skill_curse,
-    skill_roll, 
-    skill_biyoung, 
+    skill_roll,
+    skill_roll_shift,
     moving_heal,
-    moving_curse,
     tabtab,
     drink,
-    revive
+)
+
+from .job import (
+    to_king
 )
 
 
@@ -35,17 +36,9 @@ def single_key_action_pressed(event, lock, controller, stores, combis, physics, 
 def single_key_action(event, lock, controller, stores, combis, physics, key):
     args = (event, lock, controller, stores, combis, physics, key)
     
-    if key == Key.f6:         # 왕퀘 받기 시작 (좌측)
+    if key == Key.f8:         
         event.clear()
-        thd = Thread(target=king_click, args=(*args, 1095))
-        thd.start()
-    elif key == Key.f7:         # 왕퀘 받기 시작 (중앙)
-        event.clear()
-        thd = Thread(target=king_click, args=(*args, 960))
-        thd.start()
-    elif key == Key.f8:         # 왕퀘 받기 시작 (우측)
-        event.clear()
-        thd = Thread(target=king_click, args=(*args, 820))
+        thd = Thread(target=king_click, args=(*args,))
         thd.start()
     elif key == Key.f9:       # 모든 태스크 종료 (일시 중지)
         if event.is_set():
@@ -55,19 +48,25 @@ def single_key_action(event, lock, controller, stores, combis, physics, key):
             event.set()
             print("king click 비활성화")
             
-    # 탭탭
+    # 비영 + 출두
     elif key == Key.end:
-        thd = Thread(target=tabtab, args=(*args,))
+        # thd = Thread(target=tabtab, args=(*args,))
+        thd = Thread(target=to_king, args=(*args,))
         thd.start()
 
-    # 중독
+    # 저주
     elif key == Key.f1:
-        thd = Thread(target=skill_curse, args=(*args, '5'))
+        thd = Thread(target=skill_roll, args=(*args, '3'))
         thd.start()
 
     # 마비
     elif key == Key.f2:
-        thd = Thread(target=skill_curse, args=(*args, '6'))
+        thd = Thread(target=skill_roll, args=(*args, '6'))
+        thd.start()
+    
+    # 중독
+    elif key == Key.f3:
+        thd = Thread(target=skill_roll, args=(*args, '5'))
         thd.start()
     
     elif key == KeyCode(char='p'):
@@ -80,16 +79,20 @@ def combi_key_action(event, lock, controller, stores, combis, physics, key):
     args = (event, lock, controller, stores, combis, physics, key)
     
     if stores['ctrl'] == combis['ctrl']:
-        if stores['2'] == combis['2']: # 절망
-            thd = Thread(target=skill_roll, args=(*args, 'd'))
+        if stores['2'] == combis['2']: # 비영 + 출두
+            thd = Thread(target=to_king, args=(*args,))
             thd.start()
             
         elif stores['3'] == combis['3']: # 저주
-            thd = Thread(target=skill_curse, args=(*args, '7'))
+            thd = Thread(target=skill_roll, args=(*args, '3'))
             thd.start()
             
-        elif stores['4'] == combis['4']: # 활력
-            thd = Thread(target=skill_roll, args=(*args, 's'))
+        elif stores['4'] == combis['4']: # 절망
+            thd = Thread(target=skill_roll_shift, args=(*args, 'd'))
+            thd.start()
+        
+        elif stores['5'] == combis['5']: # 활력
+            thd = Thread(target=skill_roll_shift, args=(*args, 's'))
             thd.start()
             
         elif stores['e'] == combis['e']: # ctrl+e 여러번
@@ -99,60 +102,6 @@ def combi_key_action(event, lock, controller, stores, combis, physics, key):
                 thd.start()
 
 
-# 키조합 인식을 위해 set에 키 추가
-def add_combi(stores, physics, key):
-    if key == Key.ctrl_l:
-        stores['ctrl'].add(key)
-    
-    elif isinstance(key, KeyCode) and key.vk == 50:
-        stores['2'].add(KeyCode(char='2'))
-        
-    elif isinstance(key, KeyCode) and key.vk == 51:
-        stores['3'].add(KeyCode(char='3'))
-        
-    elif isinstance(key, KeyCode) and key.vk == 52:
-        stores['4'].add(KeyCode(char='4'))
-    
-    elif isinstance(key, KeyCode) and key.vk == 53:
-        stores['5'].add(KeyCode(char='5'))
-        
-    elif isinstance(key, KeyCode) and key.vk == 69:
-        if physics['e']:
-            stores['e'].add(KeyCode(char='e'))
 
 
-# 키를 뗄때 set에서 키 삭제
-def remove_combi(stores, physics, key):
-    if key == Key.ctrl_l:
-        if key in stores['ctrl']:
-            stores['ctrl'].remove(key)
-    
-    elif isinstance(key, KeyCode) and key.vk == 50:
-        c = '2'
-        key_ = KeyCode(char=c)
-        if key_ in stores[c]:
-            stores[c].remove(key_)
-            
-    elif isinstance(key, KeyCode) and key.vk == 51:
-        c = '3'
-        key_ = KeyCode(char=c)
-        if key_ in stores[c]:
-            stores[c].remove(key_)
-        
-    elif isinstance(key, KeyCode) and key.vk ==52:
-        c = '4'
-        key_ = KeyCode(char=c)
-        if key_ in stores[c]:
-            stores[c].remove(key_)
-    
-    elif isinstance(key, KeyCode) and key.vk ==53:
-        c = '5'
-        key_ = KeyCode(char=c)
-        if key_ in stores[c]:
-            stores[c].remove(key_)
-    
-    elif isinstance(key, KeyCode) and key.vk == 69:
-        c = 'e'
-        key_ = KeyCode(char=c)
-        if key_ in stores[c]:
-            stores[c].remove(key_)      
+

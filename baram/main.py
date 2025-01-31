@@ -8,21 +8,19 @@ from pynput.keyboard import (
     Listener as Kl,
 )
 
-from 도사.act import (
-    single_key_action_pressed,
-    single_key_action, 
-    combi_key_action, 
-    add_combi, 
-    remove_combi
-)
+from 공통.act import add_combi, remove_combi
 
-# from 주술사.act import (
+# from 도사.act import (
 #     single_key_action_pressed,
 #     single_key_action, 
-#     combi_key_action, 
-#     add_combi, 
-#     remove_combi
+#     combi_key_action
 # )
+
+from 주술사.act import (
+    single_key_action_pressed,
+    single_key_action, 
+    combi_key_action
+)
 
 
 # 눌릴 때 액션 (꾹누르기 포함)
