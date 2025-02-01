@@ -27,7 +27,9 @@ def press_and_release(stop_event, controller, key, delay=0.25):
 
 ########################## 마우스 동작 ##########################
 def king_click(stop_event, lock, controller, stores, combis, physics, key):
-    x,y = 685, 225
+    x,y = 685, 225 # 오른쪽에서
+    x,y = 1315, 230 # 왼쪽에서
+    x,y = 1130, 240 # 왼쪽에서
     while not stop_event.is_set():
         sleep(stop_event, 0.1)
         for _ in range(10):

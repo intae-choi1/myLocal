@@ -10,11 +10,11 @@ from pynput.keyboard import (
 
 from 공통.act import add_combi, remove_combi
 
-# from 도사.act import (
-#     single_key_action_pressed,
-#     single_key_action, 
-#     combi_key_action
-# )
+from 도사.act import (
+    single_key_action_pressed,
+    single_key_action, 
+    combi_key_action
+)
 
 from 주술사.act import (
     single_key_action_pressed,

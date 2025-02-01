@@ -16,7 +16,8 @@ from 공통.job import (
 )
 
 from .job import (
-    to_king
+    to_king,
+    to_hyung
 )
 
 
@@ -53,24 +54,30 @@ def single_key_action(event, lock, controller, stores, combis, physics, key):
         # thd = Thread(target=tabtab, args=(*args,))
         thd = Thread(target=to_king, args=(*args,))
         thd.start()
+    # 흉가 출두
+    elif key == Key.delete:
+        thd = Thread(target=to_hyung, args=(*args, '호룽보'))
+        thd.start()
+    # 흉가 출두
+    elif key == Key.insert:
+        thd = Thread(target=to_hyung, args=(*args, '호롱보'))
+        thd.start()
 
     # 저주
     elif key == Key.f1:
         thd = Thread(target=skill_roll, args=(*args, '3'))
         thd.start()
-
     # 마비
     elif key == Key.f2:
         thd = Thread(target=skill_roll, args=(*args, '6'))
         thd.start()
-    
     # 중독
     elif key == Key.f3:
         thd = Thread(target=skill_roll, args=(*args, '5'))
         thd.start()
     
     elif key == KeyCode(char='p'):
-        # print(pag.position())
+        print(pag.position())
         pass
             
 
@@ -80,8 +87,9 @@ def combi_key_action(event, lock, controller, stores, combis, physics, key):
     
     if stores['ctrl'] == combis['ctrl']:
         if stores['2'] == combis['2']: # 비영 + 출두
-            thd = Thread(target=to_king, args=(*args,))
-            thd.start()
+            pass
+            # thd = Thread(target=to_king, args=(*args,))
+            # thd.start()
             
         elif stores['3'] == combis['3']: # 저주
             thd = Thread(target=skill_roll, args=(*args, '3'))
