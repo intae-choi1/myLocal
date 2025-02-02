@@ -10,6 +10,7 @@ from 공통.job import (
     king_click,
     skill_roll,
     skill_roll_shift,
+    moving_skill,
     moving_heal,
     tabtab,
     drink,
@@ -19,7 +20,6 @@ from .job import (
     to_king,
     to_hyung
 )
-
 
 
 def single_key_action_pressed(event, lock, controller, stores, combis, physics, key):
@@ -44,36 +44,36 @@ def single_key_action(event, lock, controller, stores, combis, physics, key):
     elif key == Key.f9:       # 모든 태스크 종료 (일시 중지)
         if event.is_set():
             event.clear()
-            print("king click 활성화")
+            print("thread event clear")
         else:
             event.set()
-            print("king click 비활성화")
+            print("thread event set")
             
     # 비영 + 출두
     elif key == Key.end:
         # thd = Thread(target=tabtab, args=(*args,))
-        thd = Thread(target=to_king, args=(*args,))
+        thd = Thread(target=to_king, args=(*args, '오월랑'))
         thd.start()
     # 흉가 출두
     elif key == Key.delete:
-        thd = Thread(target=to_hyung, args=(*args, '호룽보'))
+        thd = Thread(target=to_king, args=(*args, '호룽보'))
         thd.start()
     # 흉가 출두
     elif key == Key.insert:
         thd = Thread(target=to_hyung, args=(*args, '호롱보'))
         thd.start()
 
-    # 저주
+    # 무빙 마비
     elif key == Key.f1:
-        thd = Thread(target=skill_roll, args=(*args, '3'))
+        thd = Thread(target=moving_skill, args=(*args, '6'))
         thd.start()
     # 마비
     elif key == Key.f2:
         thd = Thread(target=skill_roll, args=(*args, '6'))
         thd.start()
-    # 중독
+    # 저주
     elif key == Key.f3:
-        thd = Thread(target=skill_roll, args=(*args, '5'))
+        thd = Thread(target=skill_roll, args=(*args, '3'))
         thd.start()
     
     elif key == KeyCode(char='p'):

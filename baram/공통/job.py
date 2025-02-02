@@ -27,18 +27,24 @@ def press_and_release(stop_event, controller, key, delay=0.25):
 
 ########################## 마우스 동작 ##########################
 def king_click(stop_event, lock, controller, stores, combis, physics, key):
-    x,y = 685, 225 # 오른쪽에서
-    x,y = 1315, 230 # 왼쪽에서
-    x,y = 1130, 240 # 왼쪽에서
+    x,y = 705, 155 # 오른쪽에서
+    # x,y = 1315, 230 # 왼쪽에서
+    # x,y = 1130, 240 # 왼쪽에서
     while not stop_event.is_set():
         sleep(stop_event, 0.1)
-        for _ in range(10):
+        for _ in range(12):
             mouse_click(stop_event, x, y, 0.05)
         press_and_release(stop_event, controller, 's', 0.2)
-        press_and_release(stop_event, controller, Key.page_down, 0.2)
-        press_and_release(stop_event, controller, Key.page_down, 0.1)
-        press_and_release(stop_event, controller, Key.page_down, 0.01)
-        sleep(stop_event, 0.7)
+        for _ in range(5):
+            press_and_release(stop_event, controller, Key.page_down, 0.08)
+        for mob in ["mongdal", "bug"]:
+            try:
+                pag.locateCenterOnScreen(f"imgs/{mob}.png", region=(1800, 210, 200, 140), confidence=0.8)
+                print("흉퀘 나옴")
+                stop_event.set()
+                break
+            except pag.ImageNotFoundException:
+                sleep(stop_event, 0.1 if mob == "bug" else 0)
 
 
 ########################## 스킬 ##########################

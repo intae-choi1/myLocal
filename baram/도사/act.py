@@ -52,12 +52,10 @@ def single_key_action(event, lock, controller, stores, combis, physics, key):
     elif key == Key.end:
         thd = Thread(target=tabtab, args=(*args,))
         thd.start()
-
     # 무빙혼
     elif key == Key.f1:
         thd = Thread(target=moving_skill, args=(*args, '3'))
         thd.start()
-
     # 혼
     elif key == Key.f2:
         thd = Thread(target=skill_roll, args=(*args, '3'))
