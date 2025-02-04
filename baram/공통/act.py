@@ -4,7 +4,7 @@ from pynput.keyboard import (
 )
 
 
-# 키조합 인식을 위해 set에 키 추가
+# 키 누를때, 키조합 인식을 위해 set에 키 추가
 def add_combi(stores, physics, key):
     if key == Key.ctrl_l:
         stores['ctrl'].add(key)
@@ -26,7 +26,7 @@ def add_combi(stores, physics, key):
             stores['e'].add(KeyCode(char='e'))
 
 
-# 키를 뗄때 set에서 키 삭제
+# 키 뗄때, set에서 키 삭제
 def remove_combi(stores, physics, key):
     if key == Key.ctrl_l:
         if key in stores['ctrl']:
