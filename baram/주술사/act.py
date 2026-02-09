@@ -94,8 +94,8 @@ def combi_key_action(event, lock, controller, stores, combis, physics, key):
             thd = Thread(target=bomu, args=(*args,))
             thd.start()
             
-        elif stores['3'] == combis['3']: # 저주
-            thd = Thread(target=skill_roll, args=(*args, '3'))
+        elif stores['3'] == combis['3']: # 중독
+            thd = Thread(target=skill_roll, args=(*args, '5'))
             thd.start()
             
         elif stores['4'] == combis['4']: # 절망

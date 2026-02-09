@@ -3,51 +3,24 @@ import time, random
 import pyautogui as pag
 from pynput.keyboard import Key
 
-from .deco import deco1
-
-
-def sleep(stop_event, t):
-    if stop_event.is_set():
-        return
-    time.sleep(t)
-    
-
-def mouse_click(stop_event, x, y, wait=0.15):
-    if stop_event.is_set():
-        return
-    pag.click(x, y)
-    time.sleep(wait)
-
-
-def press_and_release(stop_event, controller, key, delay=0.25):
-    if stop_event.is_set():
-        return
-    controller.tap(key)
-    time.sleep(delay)
+from .utils import deco1, mouse_click, press_and_release
 
 
 ########################## 마우스 동작 ##########################
 @deco1
-def king_click(stop_event, lock, controller, stores, combis, physics, key):
-    x,y = 705, 155 # 오른쪽에서
-    # x,y = 765, 80 # 오른쪽에서
-    # x,y = 1315, 230 # 왼쪽에서
-    # x,y = 1130, 240 # 왼쪽에서
+def channel_change(stop_event, lock, controller, stores, combis, physics, key):
+    nx = 560 + 170 * 2       # ※※채널 x방향 n번째 ※※
+    ny = 250 + 60 * 10  # ※※채널 y방향 n번째 ※※
     while not stop_event.is_set():
-        for _ in range(12):
-            mouse_click(stop_event, x, y, 0.025)
-        press_and_release(stop_event, controller, 's', 0.1)
-        for _ in range(5):
-            press_and_release(stop_event, controller, Key.page_down, 0.1)
-        # for mob in ["mongdal", "bug"]:
-        for mob in ["ghost", "bug"]:
-            try:
-                pag.locateCenterOnScreen(f"imgs/{mob}.png", region=(1800, 210, 200, 140), confidence=0.8)
-                print("흉퀘 나옴")
-                stop_event.set()
-                break
-            except pag.ImageNotFoundException:
-                sleep(stop_event, 0.15 if mob == "bug" else 0)
+        rx = random.randrange(0, 80)
+        ry = random.randrange(0, 11)
+        mouse_click(stop_event, 1695+rx, 1330+ry, 0)  # 메뉴
+        mouse_click(stop_event, 1695+rx, 975+ry, 0.06)   # 채널변경
+        # mouse_click(stop_event, 1695+rx, 975+ry, 0.09)   # 채널변경
+        # mouse_click(stop_event, 1768, 855, 0.01)   # 아래 스크롤
+        mouse_click(stop_event, nx+rx, ny+ry, 0)    # ※※채널※※
+        press_and_release(stop_event, controller, Key.enter, 0.01)
+        press_and_release(stop_event, controller, Key.esc, 0.06) # esc
 
 
 ########################## 스킬 ##########################
