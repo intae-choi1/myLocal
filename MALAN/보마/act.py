@@ -9,12 +9,6 @@ from pynput.mouse import Controller as MC
 
 from 공통.job import (
     channel_change,
-    skill_roll,
-    skill_roll_shift,
-    moving_skill,
-    moving_heal,
-    tabtab,
-    drink,
 )
 
 from .job import (
@@ -60,10 +54,6 @@ def single_key_action(event, lock, controller, stores, combis, physics, key):
             event.clear()
         else:
             event.set()
-    ## 탭탭
-    # elif key == Key.end:
-    #     thd = Thread(target=tabtab, args=(*args,))
-    #     thd.start()
     # # 무빙혼
     # elif key == Key.f1:
     #     thd = Thread(target=moving_skill, args=(*args, '3'))

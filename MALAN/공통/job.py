@@ -9,32 +9,23 @@ from .utils import deco1, mouse_click, press_and_release
 ########################## 마우스 동작 ##########################
 @deco1
 def channel_change(stop_event, lock, controller, stores, combis, physics, key):
-    nx = 560 + 170 * 2       # ※※채널 x방향 n번째 ※※
-    ny = 250 + 60 * 10  # ※※채널 y방향 n번째 ※※
     while not stop_event.is_set():
-        rx = random.randrange(0, 80)
-        ry = random.randrange(0, 11)
-        mouse_click(stop_event, 1695+rx, 1330+ry, 0)  # 메뉴
-        mouse_click(stop_event, 1695+rx, 975+ry, 0.06)   # 채널변경
-        # mouse_click(stop_event, 1695+rx, 975+ry, 0.09)   # 채널변경
-        # mouse_click(stop_event, 1768, 855, 0.01)   # 아래 스크롤
-        mouse_click(stop_event, nx+rx, ny+ry, 0)    # ※※채널※※
-        press_and_release(stop_event, controller, Key.enter, 0.01)
-        press_and_release(stop_event, controller, Key.esc, 0.06) # esc
+        nx = 560 + 170 * 3       # ※※채널 x방향 n번째 ※※
+        ny = 250 + 60 * 10  # ※※채널 y방향 n번째 ※※
+        while not stop_event.is_set():
+            rx = random.randrange(0, 80)
+            ry = random.randrange(0, 11)
+            mouse_click(stop_event, 1695+rx, 1330+ry, 0)  # 메뉴
+            mouse_click(stop_event, 1695+rx, 975+ry, 0.06)   # 채널변경
+            # mouse_click(stop_event, 1695+rx, 975+ry, 0.09)   # 채널변경
+            # mouse_click(stop_event, 1768, 855, 0.01)   # 아래 스크롤
+            mouse_click(stop_event, nx+rx, ny+ry, 0)    # ※※채널※※
+            press_and_release(stop_event, controller, Key.enter, 0.01)
+            press_and_release(stop_event, controller, Key.esc, 0.06) # esc
 
 
 ########################## 스킬 ##########################
 ######################### 단일 키 #########################
-# 탭탭
-@deco1
-def tabtab(event, lock, controller, stores, combis, physics, key):
-    press_and_release(event, controller, Key.tab, 0.08)
-    press_and_release(event, controller, Key.tab, 0.02)
-    for i in range(5):
-        controller.tap('4')
-        time.sleep(0.02)
-
-
 # 무빙 스킬
 @deco1
 def moving_skill(event, lock, controller, stores, combis, physics, key, char):

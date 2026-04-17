@@ -12,8 +12,10 @@ from 공통.job import press_and_release
 def use_shift(event, lock, controller, stores, combis, physics, key):
     if physics['shift_toggle']:
         controller.press(Key.shift_l)
+        # controller.press("a")
     else:
         controller.release(Key.shift_l)
+        # controller.release("a")
     physics['shift_toggle'] = not physics['shift_toggle']
 
 # 점프와 스킬샷 동시에

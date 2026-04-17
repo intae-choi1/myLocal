@@ -4,15 +4,17 @@ import tkinter as tk
 from pynput import keyboard
 
 
-TIMER_COUNT = 1
+TIMER_COUNT = 3
 COUNTDOWN_TIME = 120
 ALERT_TIME = 10
 UPDATE_MS = 100  # 0.1초12
-TARGET_KEY = keyboard.Key.f2
+# TARGET_KEY = keyboard.Key.f2
+TARGET_KEY = keyboard.Key.delete
 KOREAN_ORDER = ["", "첫", "두", "세", "네", "다섯", "여섯"]
 
 LOOP_TIME = 31.1
 LOOP_KEY = keyboard.Key.f5
+
 
 
 format_time = f"{int(COUNTDOWN_TIME)//60:02}:{int(COUNTDOWN_TIME)%60:02}.{int((COUNTDOWN_TIME % 1) * 10)}"
@@ -234,7 +236,6 @@ class MultiKeyTimerApp:
                 (hasattr(key, "char") and key.char == TARGET_KEY)):
                     self.root.after(0, self.activate_next_timer)
             elif key == LOOP_KEY:
-                print(key, LOOP_KEY)
                 self.root.after(0, lambda: self.loop_timer.toggle(self.root))
         except:
             pass
