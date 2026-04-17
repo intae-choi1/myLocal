@@ -26,7 +26,7 @@ def single_key_action_pressed(event, lock, controller, stores, combis, physics, 
     if key in (Key.up, Key.left, Key.down, Key.right):
         physics['direction'] = key
         
-    # alt 꾹 누르기 (caps_lock으로 토글)
+    # shift 꾹 누르기 (caps_lock으로 토글)
     elif key == Key.caps_lock:
         thd = Thread(target=use_shift, args=(*args,))
         thd.start()
