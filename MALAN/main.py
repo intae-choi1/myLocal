@@ -10,8 +10,8 @@ from pynput.keyboard import (
 
 from 공통.utils import add_combi, remove_combi
 
-from 보마.act import (
-# from 프리.act import (
+# from 보마.act import (
+from 프리.act import (
     single_key_action_pressed,
     single_key_action, 
     combi_key_action

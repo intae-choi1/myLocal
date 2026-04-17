@@ -13,11 +13,12 @@ from 공통.job import (
     skill_roll_shift,
     moving_skill,
     moving_heal,
-    tabtab,
     drink,
 )
 from .job import (
     use_shift,
+    buffs,
+    buffs2,
 )
 
 
@@ -28,30 +29,30 @@ def single_key_action_pressed(event, lock, controller, stores, combis, physics, 
     args = (event, lock, controller, stores, combis, physics, key)
     
     if key in (Key.up, Key.left, Key.down, Key.right):
-        if not event.is_set():
-            controller.release(Key.shift_l)
-            time.sleep(0.03)
-            controller.tap("x")
+        physics['direction'] = key
         
-    # alt 꾹 누르기 (caps_lock으로 토글)
+    # shift 꾹 누르기 (caps_lock으로 토글)
     elif key == Key.caps_lock:
-        pass
-        # thd = Thread(target=use_shift, args=(*args,))
-        # thd.start()
+        # return
+        thd = Thread(target=use_shift, args=(*args,))
+        thd.start()
+
 
 
 def single_key_action(event, lock, controller, stores, combis, physics, key):
     args = (event, lock, controller, stores, combis, physics, key)
-    if key in (Key.up, Key.left, Key.down, Key.right):
-        if not event.is_set():
-            controller.press(Key.shift_l)
-    
     if key == Key.pause:    # pause 누르면 마우스 포지션 출력
         print(mc.position)
 
-    elif key == Key.f8:         # 채널변경
+    elif key == Key.f8:         
         event.clear()
+        # thd = Thread(target=use_shift, args=(*args,))
         thd = Thread(target=channel_change, args=(*args,))
+        thd.start()
+    elif (hasattr(key, "vk") and key.vk == 96) or key == Key.insert:    # 버프돌리기
+        event.clear()
+        # thd = Thread(target=buffs, args=(*args,))
+        thd = Thread(target=buffs2, args=(*args,))
         thd.start()
     elif key == Key.f9:       # 모든 태스크 종료 (일시 중지)
         if event.is_set():
@@ -72,7 +73,7 @@ def single_key_action(event, lock, controller, stores, combis, physics, key):
     #     thd.start()
     
     # elif key == KeyCode(char='p'):
-    #     # print(pag.position())
+    #     print(pag.position())
     #     pass
             
 
