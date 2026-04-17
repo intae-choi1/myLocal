@@ -52,20 +52,19 @@ def main():
     # listener.start()
     
     m_move_and_click(850, 120, 1)
-    for _ in range(2):
-        x, y = pag.locateCenterOnScreen("imgs/jane.png", region=(550, 600, 1300, 1200), confidence=0.85)
-        y -= 50
-        m_move_and_click(x, y, 2) # jane클릭
-        m_move_and_click(1700, 800, 1) # 다음
-        m_move_and_click(1650, 700, 1) # 빈공간
-        m_move_and_click(1150, 715, 1) # 장어 ##########
-        m_move_and_click(1150, 745, 1) # 입력창
-        for i in ["1", "0", "0"]:
-            k_press_and_release(i)
-            
-        m_move_and_click(1730, 910, 1) # 확인
-        m_move_and_click(1650, 910, 1) # 예
-        m_move_and_click(830, 910, 1) # 대화 종료
+    for _ in range(17):
+        m_move_and_click(800, 450, 1) # charli클릭
+        m_move_and_click(1800, 800, 1) # 다음
+        m_move_and_click(1720, 935, 1) # 예
+        m_move_and_click(1630, 700, 1) # 빈공간
+        #휠
+        for _ in range(50):
+            mc.scroll(0,-10)
+            time.sleep(0.01)
+        time.sleep(0.2)
+        m_move_and_click(1130, 510, 1) # 좀비
+        m_move_and_click(1720, 935, 1) # 예
+        m_move_and_click(1800, 800, 1)  # 다음
         
     # listener.join()
 
