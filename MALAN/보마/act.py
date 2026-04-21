@@ -9,6 +9,7 @@ from pynput.mouse import Controller as MC
 
 from 공통.job import (
     channel_change,
+    put_cider,
 )
 
 from .job import (
@@ -49,6 +50,12 @@ def single_key_action(event, lock, controller, stores, combis, physics, key):
         event.clear()
         thd = Thread(target=channel_change, args=(*args,))
         thd.start()
+    
+    elif (hasattr(key, "vk") and key.vk == 96) or key == Key.insert:    # 버프돌리기
+        event.clear()
+        thd = Thread(target=put_cider, args=(*args,))
+        thd.start()
+
     elif key == Key.f9:       # 모든 태스크 종료 (일시 중지)
         if event.is_set():
             event.clear()

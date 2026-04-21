@@ -23,6 +23,20 @@ def channel_change(stop_event, lock, controller, stores, combis, physics, key):
             press_and_release(stop_event, controller, Key.enter, 0.01)
             press_and_release(stop_event, controller, Key.esc, 0.06) # esc
 
+@deco1
+def put_cider(stop_event, lock, controller, stores, combis, physics, key):
+    pack_stand_x, pack_stand_y = pag.locateCenterOnScreen("../imgs/meso_post.png", confidence=0.7)
+    for i in range(12):
+        try:
+            x, y = pag.locateCenterOnScreen("../imgs/cider.png", confidence=0.9, region=(880, 40, 1600, 1400))
+            package_x = pack_stand_x + 25  + (i%6)*100
+            package_y = pack_stand_y - 180 + (i//6)*100
+            mouse_click(stop_event, x, y, 0.12)
+            mouse_click(stop_event, package_x, package_y, 0.08)
+        except pag.ImageNotFoundException as e:
+            print(e)
+            break
+
 
 ########################## 스킬 ##########################
 ######################### 단일 키 #########################
