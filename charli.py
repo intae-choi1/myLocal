@@ -52,17 +52,17 @@ def main():
     # listener.start()
     
     m_move_and_click(850, 120, 1)
-    for _ in range(17):
+    for _ in range(18):
         m_move_and_click(800, 450, 1) # charli클릭
         m_move_and_click(1800, 800, 1) # 다음
         m_move_and_click(1720, 935, 1) # 예
         m_move_and_click(1630, 700, 1) # 빈공간
         #휠
-        for _ in range(50):
+        for _ in range(40):
             mc.scroll(0,-10)
             time.sleep(0.01)
-        time.sleep(0.2)
-        m_move_and_click(1130, 510, 1) # 좀비
+        time.sleep(0.4)
+        m_move_and_click(1130, 505, 1) # 좀비 505, 헥터 410, 화팽 550
         m_move_and_click(1720, 935, 1) # 예
         m_move_and_click(1800, 800, 1)  # 다음
         
