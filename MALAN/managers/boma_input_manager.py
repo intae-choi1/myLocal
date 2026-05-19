@@ -1,7 +1,6 @@
 from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
-from tasks.notepad_task import NotepadTask
 from tasks.boma_task import ShiftToggleTask, JumpSkillTask
 from tasks.common_task import ChannelChangeTask, PutCiderTask
 
@@ -43,11 +42,11 @@ class InputManager:
         if key == Key.caps_lock:
             self.automation_manager.start_task(ShiftToggleTask())
 
-        elif key == KeyCode(char='b'):
-            self.automation_manager.start_task(JumpSkillTask('x'))
+        # elif key == KeyCode(char='b'):
+        #     self.automation_manager.start_task(JumpSkillTask('x'))
 
-        elif key == KeyCode(char='n'):
-            self.automation_manager.start_task(JumpSkillTask('c'))
+        # elif key == KeyCode(char='n'):
+        #     self.automation_manager.start_task(JumpSkillTask('c'))
 
 
     def on_release(self, key):

@@ -38,7 +38,7 @@ class BuffTask2:
     def run(self, runner):
         x, y = pag.locateCenterOnScreen("../imgs/cashop.png", confidence=0.7, region=(0, 800, 1920, 280))
         runner.move_mouse(x, y-110, 0.1)
-        runner.click(0.1)
+        runner.click(wait=0.1)
 
         runner.press(Key.end, 0.2)
         runner.release(Key.end, 0.1)

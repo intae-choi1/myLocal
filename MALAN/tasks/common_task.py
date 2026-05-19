@@ -39,10 +39,10 @@ class PutCiderTask:
                 x, y = pag.locateCenterOnScreen("../imgs/cider.png", confidence=0.9, region=(880, 40, 1600, 1400))
                 package_x = pack_stand_x + 25  + (i%6)*100
                 package_y = pack_stand_y - 180 + (i//6)*100
-                runner.move_mouse(x, y, 0.12)
-                runner.click()
-                runner.move_mouse(package_x, package_y, 0.08)
-                runner.click()
+                runner.move_mouse(x, y, 0.04)
+                runner.click(wait=0.12)
+                runner.move_mouse(package_x, package_y, 0.04)
+                runner.click(wait=0.12)
             except pag.ImageNotFoundException as e:
                 print(e)
                 break

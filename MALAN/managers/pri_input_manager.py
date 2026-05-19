@@ -3,7 +3,6 @@ import time
 from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
-from tasks.notepad_task import NotepadTask
 from tasks.pri_task import ShiftToggleTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
 from tasks.common_task import ChannelChangeTask
 

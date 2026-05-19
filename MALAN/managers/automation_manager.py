@@ -1,11 +1,12 @@
 import threading
 
+import pygetwindow as gw
+
 from models.state import AutomationState
 
 from controllers.stop_controller import StopController
 
 from runners.action_runner import ActionRunner
-
 
 class AutomationManager:
     def __init__(self):
@@ -26,7 +27,11 @@ class AutomationManager:
     # 실행 가능 여부
     # ---------------------------------
     def can_start(self):
-        return self.state == AutomationState.IDLE
+        window = gw.getActiveWindow()
+        title = ""
+        if window is not None:
+            title = window.title
+        return (self.state == AutomationState.IDLE and title.startswith("Maple"))
 
 
     # ---------------------------------
@@ -35,7 +40,6 @@ class AutomationManager:
     def start_task(self, task):
         with self.lock:
             if not self.can_start():
-                # print("아직 실행 중")
                 return
 
             self.state = AutomationState.RUNNING
