@@ -3,9 +3,9 @@ import time
 from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
+from models.state import AutomationState
 from tasks.pri_task import ShiftToggleTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
 from tasks.common_task import ChannelChangeTask
-
 
 class InputManager:
     def __init__(self, automation_manager):
@@ -71,9 +71,8 @@ class InputManager:
         try:
             if key in (Key.up, Key.left, Key.down, Key.right):
                 if self.tellheal_enabled:
-                    time.sleep(0.8)
-                    self.automation_manager.runner.press(Key.shift_l)
-                    # self.automation_manager.start_task(PressShiftTask())
+                    self.automation_manager.state = AutomationState.IDLE
+                    self.automation_manager.start_task(PressShiftTask())
 
             if key == Key.pause:
                 print(self.automation_manager.runner.mouse.position)
@@ -82,8 +81,9 @@ class InputManager:
                 self.automation_manager.start_task(ChannelChangeTask())
 
             elif (hasattr(key, "vk") and key.vk == 96) or key == Key.insert:
-                self.automation_manager.start_task(BuffTask1())
-                # self.automation_manager.start_task(Buff2Task())
+                task = BuffTask1()
+                task = BuffTask2()
+                self.automation_manager.start_task(task)
                 
             # 키조합 인식
             # elif self.is_pressed("Key.ctrl_l") and (isinstance(key, KeyCode) and key.vk == 65):

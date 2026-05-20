@@ -1,6 +1,6 @@
 import pyautogui as pag
 from pynput.keyboard import Key
-
+import time
 
 class ShiftToggleTask:
     toggle = True
@@ -68,6 +68,7 @@ class PressShiftTask:
         pass
 
     def run(self, runner):
+        time.sleep(0.4)
         runner.press(Key.shift_l)
 
 
