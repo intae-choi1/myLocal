@@ -46,3 +46,23 @@ class PutCiderTask:
             except pag.ImageNotFoundException as e:
                 print(e)
                 break
+
+
+class NotebookPutCiderTask:
+    def __init__(self):
+        pass
+
+    def run(self, runner):
+        pack_stand_x, pack_stand_y = pag.locateCenterOnScreen("../imgs/meso_post.png", confidence=0.7)
+        for i in range(12):
+            try:
+                x, y = pag.locateCenterOnScreen("../imgs/cider.png", confidence=0.9, region=(1200, 40, 800, 1040))
+                package_x = pack_stand_x + 15  + (i%6)*53
+                package_y = pack_stand_y - 95 + (i//6)*55
+                runner.move_mouse(x, y, 0.04)
+                runner.click(wait=0.2)
+                runner.move_mouse(package_x, package_y, 0.04)
+                runner.click(wait=0.2)
+            except pag.ImageNotFoundException as e:
+                print(e)
+                break

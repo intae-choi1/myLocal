@@ -5,7 +5,7 @@ from pynput.keyboard import Key, KeyCode
 
 from models.state import AutomationState
 from tasks.pri_task import ShiftToggleTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
-from tasks.common_task import ChannelChangeTask
+from tasks.common_task import ChannelChangeTask, NotebookPutCiderTask
 
 class InputManager:
     def __init__(self, automation_manager):
@@ -68,17 +68,20 @@ class InputManager:
             self.automation_manager.stop()
             return
 
+        elif key == Key.media_play_pause:
+                print(self.automation_manager.runner.mouse.position)
+
         try:
             if key in (Key.up, Key.left, Key.down, Key.right):
                 if self.tellheal_enabled:
                     self.automation_manager.state = AutomationState.IDLE
                     self.automation_manager.start_task(PressShiftTask())
 
-            if key == Key.pause:
-                print(self.automation_manager.runner.mouse.position)
-
             elif key == Key.f8:
                 self.automation_manager.start_task(ChannelChangeTask())
+            
+            elif key == Key.f12:
+                self.automation_manager.start_task(NotebookPutCiderTask())
 
             elif (hasattr(key, "vk") and key.vk == 96) or key == Key.insert:
                 task = BuffTask1()
