@@ -57,19 +57,19 @@ class InputManager:
         if key == Key.f4: # 종료
             return False
 
-        if key == Key.f9: # 정지
+        elif key == Key.f9: # 정지
             print("긴급 중단")
             self.automation_manager.stop()
             return
+        
+        elif key == Key.pause:
+            print(self.automation_manager.runner.mouse.position)
 
         try:
-            if key == Key.pause:
-                print(self.automation_manager.runner.mouse.position)
-
-            elif key == Key.f8:
+            if key == Key.f8:
                 self.automation_manager.start_task(ChannelChangeTask())
 
-            elif (hasattr(key, "vk") and key.vk == 96) or key == Key.insert:
+            elif key == Key.insert:
                 self.automation_manager.start_task(PutCiderTask())
                 
             # 키조합 인식
