@@ -1,6 +1,15 @@
+import time
 import pyautogui as pag
 from pynput.keyboard import Key
-import time
+
+from ultralytics import YOLO
+import cv2
+import numpy as np
+import mss
+
+
+sct = mss.mss()
+
 
 class ShiftToggleTask:
     toggle = True
@@ -14,6 +23,50 @@ class ShiftToggleTask:
             runner.release(Key.shift_l)
 
         ShiftToggleTask.toggle = not ShiftToggleTask.toggle
+
+
+class CentaurShiftTask:
+    is_pressed_shift = False
+    model = YOLO("best_redcen.pt")
+    def __init__(self):
+        self.monitor = {
+            "top": 500,
+            "left": 700,
+            "height": 420,
+            "width": 1220,
+        }
+
+    def run(self, runner):
+        no_detection_count = 0
+        while not runner.stop_controller.is_stopped():
+            # 스크린샷
+            screenshot = np.array(sct.grab(self.monitor))
+            # BGR 변환
+            frame = cv2.cvtColor(screenshot, cv2.COLOR_BGRA2BGR)
+            # YOLO 추론
+            results = CentaurShiftTask.model(frame, verbose=False)
+
+            annotated_frame = results[0].plot()
+            find = len(results[0].boxes)
+            # print(f"{find=}")
+            # print(f"{no_detection_count=}")
+            if find:
+                if CentaurShiftTask.is_pressed_shift:
+                    continue
+                runner.press(Key.shift_l)
+                CentaurShiftTask.is_pressed_shift = True
+            else:
+                no_detection_count += 1
+
+            if no_detection_count >= 3:
+                runner.release(Key.shift_l)
+                CentaurShiftTask.is_pressed_shift = False
+                no_detection_count = 0
+
+            time.sleep(0.25)
+        else:
+            if CentaurShiftTask.is_pressed_shift:
+                runner.release(Key.shift_l)
 
 
 class BuffTask1:
@@ -43,8 +96,11 @@ class BuffTask2:
         runner.press(Key.end, 0.2)
         runner.release(Key.end, 0.1)
 
-        runner.press(Key.delete, 0.5)
-        runner.release(Key.delete)
+        runner.press(Key.delete, 1.5)
+        runner.release(Key.delete, 0.1)
+
+        # runner.press(Key.shift_l, 0.8)
+        # runner.release(Key.shift_l)
 
         runner.tap(Key.enter)
         runner.type_text("/파티탈퇴")
