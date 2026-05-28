@@ -4,8 +4,8 @@ from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
 from models.state import AutomationState
-from tasks.pri_task import ShiftToggleTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
-from tasks.common_task import ChannelChangeTask, NotebookPutCiderTask
+from tasks.pri_task import ShiftToggleTask, CentaurShiftTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
+from tasks.common_task import NotebookChannelChangeTask, NotebookPutCiderTask
 
 class InputManager:
     def __init__(self, automation_manager):
@@ -46,8 +46,10 @@ class InputManager:
             if self.tellheal_enabled:
                 self.automation_manager.start_task(TellHealTask())
         
+        # elif key == Key.caps_lock or key == Key.insert:
         elif key == Key.caps_lock:
-            self.automation_manager.start_task(ShiftToggleTask())
+            # self.automation_manager.start_task(ShiftToggleTask())
+            self.automation_manager.start_task(CentaurShiftTask())
 
 
 
@@ -78,7 +80,7 @@ class InputManager:
                     self.automation_manager.start_task(PressShiftTask())
 
             elif key == Key.f8:
-                self.automation_manager.start_task(ChannelChangeTask())
+                self.automation_manager.start_task(NotebookChannelChangeTask())
             
             elif key == Key.f12:
                 self.automation_manager.start_task(NotebookPutCiderTask())
@@ -106,7 +108,24 @@ class InputManager:
         self.listener.start()
 
         print("입력 감지 시작")
+        # check_magatia()
 
         self.listener.join()
 
         print("종료")
+
+
+def check_magatia():
+    import threading
+    import pyautogui as pag
+    def task():
+        while True:
+            try:
+                x, y = pag.locateCenterOnScreen("../imgs/magatia.png", confidence=0.95, region=(600, 250, 300, 300))
+                keycon = keyboard.Controller()
+                keycon.tap(Key.f4)
+                keycon.release(Key.shift_l)
+            except Exception as e:
+                time.sleep(5)
+    th = threading.Thread(target=task, daemon=True)
+    th.start()

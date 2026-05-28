@@ -27,6 +27,27 @@ class ChannelChangeTask:
             runner.tap(Key.esc, 0.06)
 
 
+class NotebookChannelChangeTask:
+    def __init__(self):
+        pass
+
+    def run(self, runner):
+        nx = 400 + 135 * 4       # ※※채널 x방향 n번째 ※※
+        ny = 200 + 45 * 10  # ※※채널 y방향 n번째 ※※
+        while not runner.stop_controller.is_stopped():
+            rx = random.randrange(0, 70)
+            ry = random.randrange(0, 11)
+            runner.move_mouse(1270+rx, 1020+ry, 0.05)      #메뉴
+            runner.click(wait=0.16)
+            runner.move_mouse(1270+rx, 740+ry, 0.05)    #채널변경
+            runner.click(wait=0.4)
+            # runner.move_mouse(1768, 855, 0.01)        #아래 스크롤
+            # runner.click()
+            runner.move_mouse(nx+rx, ny+ry, 0)    # ※※채널※※
+            runner.click()
+            runner.tap(Key.enter, 0.01)
+            runner.tap(Key.esc, 0.16)
+
 
 class PutCiderTask:
     def __init__(self):
