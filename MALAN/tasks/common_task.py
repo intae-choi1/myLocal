@@ -10,7 +10,7 @@ class ChannelChangeTask:
         pass
 
     def run(self, runner):
-        nx = 560 + 170 * 3       # ※※채널 x방향 n번째 ※※
+        nx = 560 + 170 * 4       # ※※채널 x방향 n번째 ※※
         ny = 250 + 60 * 10  # ※※채널 y방향 n번째 ※※
         while not runner.stop_controller.is_stopped():
             rx = random.randrange(0, 80)
