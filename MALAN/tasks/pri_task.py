@@ -30,7 +30,8 @@ class CentaurShiftTask:
     model = YOLO("best_redcen.pt")
     def __init__(self):
         self.monitor = {
-            "top": 500,
+            # "top": 500,
+            "top": 550,
             "left": 700,
             "height": 420,
             "width": 1220,
@@ -44,28 +45,33 @@ class CentaurShiftTask:
             # BGR 변환
             frame = cv2.cvtColor(screenshot, cv2.COLOR_BGRA2BGR)
             # YOLO 추론
-            results = CentaurShiftTask.model(frame, verbose=False)
+            results = CentaurShiftTask.model(frame, verbose=False, conf=0.35)
 
-            annotated_frame = results[0].plot()
+            # annotated_frame = results[0].plot()
             find = len(results[0].boxes)
             # print(f"{find=}")
             # print(f"{no_detection_count=}")
+
             if find:
+                no_detection_count = 0
                 if CentaurShiftTask.is_pressed_shift:
                     continue
-                runner.press(Key.shift_l)
                 CentaurShiftTask.is_pressed_shift = True
+                runner.press(Key.shift_l)
             else:
                 no_detection_count += 1
 
             if no_detection_count >= 3:
-                runner.release(Key.shift_l)
-                CentaurShiftTask.is_pressed_shift = False
                 no_detection_count = 0
+                CentaurShiftTask.is_pressed_shift = False
+                runner.release(Key.shift_l)
+            
+            time.sleep(0.1)
 
-            time.sleep(0.25)
         else:
             if CentaurShiftTask.is_pressed_shift:
+                no_detection_count = 0
+                CentaurShiftTask.is_pressed_shift = False
                 runner.release(Key.shift_l)
 
 

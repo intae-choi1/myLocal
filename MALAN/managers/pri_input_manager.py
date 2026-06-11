@@ -49,15 +49,15 @@ class InputManager:
         # elif key == Key.caps_lock or key == Key.insert:
         elif key == Key.caps_lock:
             # self.automation_manager.start_task(ShiftToggleTask())
-            self.automation_manager.start_task(CentaurShiftTask())
+            if self.automation_manager.state == AutomationState.RUNNING:
+                self.automation_manager.runner.release(Key.shift_l)
+                self.automation_manager.stop()
+            else:
+                self.automation_manager.start_task(CentaurShiftTask())
 
 
 
     def on_release(self, key):
-        # 자동화 입력 무시
-        # if self.automation_manager.runner.is_typing:
-        #     return
-        
         if key == Key.f4: # 종료
             return False
         

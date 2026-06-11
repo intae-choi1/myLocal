@@ -7,12 +7,12 @@ from pynput import keyboard
 TIMER_COUNT = 3
 COUNTDOWN_TIME = 120
 ALERT_TIME = 10
-UPDATE_MS = 100  # 0.1초12
+UPDATE_MS = 50  # 0.1초12
 # TARGET_KEY = keyboard.Key.f2
 TARGET_KEY = keyboard.Key.delete
 KOREAN_ORDER = ["", "첫", "두", "세", "네", "다섯", "여섯"]
 
-LOOP_TIME = 31.0
+LOOP_TIME = 31.3
 LOOP_KEY = keyboard.Key.f5
 
 

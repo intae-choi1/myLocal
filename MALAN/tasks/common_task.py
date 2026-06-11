@@ -11,7 +11,7 @@ class ChannelChangeTask:
 
     def run(self, runner):
         nx = 560 + 170 * 4       # ※※채널 x방향 n번째 ※※
-        ny = 250 + 60 * 10  # ※※채널 y방향 n번째 ※※
+        ny = 250 + 60 * 8  # ※※채널 y방향 n번째 ※※
         while not runner.stop_controller.is_stopped():
             rx = random.randrange(0, 80)
             ry = random.randrange(0, 11)
@@ -60,10 +60,10 @@ class PutCiderTask:
                 x, y = pag.locateCenterOnScreen("../imgs/cider.png", confidence=0.9, region=(880, 40, 1600, 1400))
                 package_x = pack_stand_x + 25  + (i%6)*100
                 package_y = pack_stand_y - 180 + (i//6)*100
-                runner.move_mouse(x, y, 0.04)
-                runner.click(wait=0.12)
+                runner.move_mouse(x, y, 0.1)
+                runner.click(wait=0.15)
                 runner.move_mouse(package_x, package_y, 0.04)
-                runner.click(wait=0.12)
+                runner.click(wait=0.15)
             except pag.ImageNotFoundException as e:
                 print(e)
                 break
@@ -87,3 +87,22 @@ class NotebookPutCiderTask:
             except pag.ImageNotFoundException as e:
                 print(e)
                 break
+
+
+class FlJumpTask:
+    def __init__(self):
+        pass
+
+    def run(self, runner):
+        runner.press(Key.up, 0.02)
+
+        runner.press(Key.right, 0.02)
+        runner.press(Key.space, 0.08)
+        runner.release(Key.right, 0)
+        runner.release(Key.space, 0)
+
+        runner.press(Key.left, 0.04)
+        runner.tap("x", 0.01)
+        runner.release(Key.left, 0.16)
+        # runner.wait(0.1)
+        runner.release(Key.up, 0)
