@@ -18,9 +18,7 @@ class AutomationManager:
 
         self.stop_controller = StopController()
 
-        self.runner = ActionRunner(
-            self.stop_controller
-        )
+        self.runner = ActionRunner(self.stop_controller)
 
 
     # ---------------------------------

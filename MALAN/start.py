@@ -7,9 +7,7 @@ from managers.pri_input_manager import InputManager
 def main():
     automation_manager = AutomationManager()
 
-    input_manager = InputManager(
-        automation_manager
-    )
+    input_manager = InputManager(automation_manager)
 
     input_manager.start()
 

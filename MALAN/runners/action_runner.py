@@ -23,10 +23,7 @@ class ActionRunner:
 
     # 대기
     def wait(self, seconds):
-        interruptible_sleep(
-            seconds,
-            self._check
-        )
+        interruptible_sleep(seconds, self._check)
 
 
     def press(self, key, wait=0):
@@ -55,12 +52,7 @@ class ActionRunner:
 
 
     # 클릭
-    def click(
-        self,
-        button=mouse.Button.left,
-        count=1,
-        wait=0.04
-    ):
+    def click(self, button=mouse.Button.left, count=1, wait=0.04):
         self._check()
         self.mouse.click(button, count)
         time.sleep(wait)

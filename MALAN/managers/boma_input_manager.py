@@ -2,7 +2,7 @@ from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
 from tasks.boma_task import ShiftToggleTask, JumpSkillTask
-from tasks.common_task import ChannelChangeTask, PutCiderTask, NotebookPutCiderTask
+from tasks.common_task import ChannelChangeTask, PutCiderTask, FlJumpTask, NotebookPutCiderTask
 
 
 class InputManager:
@@ -41,6 +41,10 @@ class InputManager:
         
         if key == Key.caps_lock:
             self.automation_manager.start_task(ShiftToggleTask())
+        
+        elif key == Key.f1:
+            # return
+            self.automation_manager.start_task(FlJumpTask())
 
         # elif key == KeyCode(char='b'):
         #     self.automation_manager.start_task(JumpSkillTask('x'))
@@ -50,10 +54,6 @@ class InputManager:
 
 
     def on_release(self, key):
-        # 자동화 입력 무시
-        if self.automation_manager.runner.is_typing:
-            return
-        
         if key == Key.f4: # 종료
             return False
 
@@ -65,6 +65,7 @@ class InputManager:
         elif key == Key.pause:
             print(self.automation_manager.runner.mouse.position)
 
+        
         try:
             if key == Key.f8:
                 self.automation_manager.start_task(ChannelChangeTask())
