@@ -48,8 +48,8 @@ class InputManager:
         
         # elif key == Key.caps_lock or key == Key.insert:
         elif key == Key.caps_lock:
-            # self.automation_manager.start_task(ShiftToggleTask())
-            self.automation_manager.start_task(CentaurShiftTask())
+            self.automation_manager.start_task(ShiftToggleTask())
+            # self.automation_manager.start_task(CentaurShiftTask())
 
 
 
@@ -66,7 +66,6 @@ class InputManager:
             self.automation_manager.runner.release(Key.shift_l)
 
         elif key == Key.f9: # 정지
-            print("긴급 중단")
             self.automation_manager.stop()
             return
 
@@ -87,7 +86,7 @@ class InputManager:
 
             elif (hasattr(key, "vk") and key.vk == 96) or key == Key.insert:
                 task = BuffTask1()
-                task = BuffTask2()
+                # task = BuffTask2()
                 self.automation_manager.start_task(task)
                 
             # 키조합 인식

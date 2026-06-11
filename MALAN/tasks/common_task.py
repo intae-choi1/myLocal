@@ -77,7 +77,7 @@ class NotebookPutCiderTask:
         pack_stand_x, pack_stand_y = pag.locateCenterOnScreen("../imgs/meso_post.png", confidence=0.7)
         for i in range(12):
             try:
-                x, y = pag.locateCenterOnScreen("../imgs/cider.png", confidence=0.9, region=(1200, 40, 800, 1040))
+                x, y = pag.locateCenterOnScreen("../imgs/cider.png", confidence=0.8, region=(1200, 40, 800, 1040))
                 package_x = pack_stand_x + 15  + (i%6)*53
                 package_y = pack_stand_y - 95 + (i//6)*55
                 runner.move_mouse(x, y, 0.04)

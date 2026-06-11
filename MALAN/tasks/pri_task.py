@@ -2,7 +2,7 @@ import time
 import pyautogui as pag
 from pynput.keyboard import Key
 
-from ultralytics import YOLO
+# from ultralytics import YOLO
 import cv2
 import numpy as np
 import mss
@@ -27,13 +27,13 @@ class ShiftToggleTask:
 
 class CentaurShiftTask:
     is_pressed_shift = False
-    model = YOLO("best_redcen.pt")
+    # model = YOLO("best_redcen.pt")
     def __init__(self):
         self.monitor = {
             "top": 500,
             "left": 700,
             "height": 420,
-            "width": 1220,
+            "width": 920,
         }
 
     def run(self, runner):
@@ -44,7 +44,7 @@ class CentaurShiftTask:
             # BGR 변환
             frame = cv2.cvtColor(screenshot, cv2.COLOR_BGRA2BGR)
             # YOLO 추론
-            results = CentaurShiftTask.model(frame, verbose=False)
+            results = CentaurShiftTask.model(frame, verbose=False, conf=0.15)
 
             annotated_frame = results[0].plot()
             find = len(results[0].boxes)
@@ -63,10 +63,12 @@ class CentaurShiftTask:
                 CentaurShiftTask.is_pressed_shift = False
                 no_detection_count = 0
 
-            time.sleep(0.25)
+            time.sleep(0.2)
         else:
+            print("centaur종료")
             if CentaurShiftTask.is_pressed_shift:
-                runner.release(Key.shift_l)
+                runner.keyboard.release(Key.shift_l)
+                CentaurShiftTask.is_pressed_shift = False
 
 
 class BuffTask1:
@@ -113,9 +115,9 @@ class TellHealTask:
 
     def run(self, runner):
         runner.release(Key.shift_l, 0.05)
-        runner.tap("c", 0.05)
+        runner.tap("x", 0.05)
 
-        runner.press(Key.shift_l, 0.2)
+        runner.press(Key.shift_l, 0.15)
         runner.release(Key.shift_l, 0)
 
 
