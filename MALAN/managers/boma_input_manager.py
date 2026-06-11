@@ -71,7 +71,7 @@ class InputManager:
                 self.automation_manager.start_task(ChannelChangeTask())
 
             elif key == Key.insert:
-                self.automation_manager.start_task(NotebookPutCiderTask())
+                self.automation_manager.start_task(PutCiderTask())
                 
             # 키조합 인식
             # elif self.is_pressed("Key.ctrl_l") and (isinstance(key, KeyCode) and key.vk == 65):

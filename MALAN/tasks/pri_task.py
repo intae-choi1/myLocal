@@ -68,21 +68,12 @@ class CentaurShiftTask:
             
             time.sleep(0.1)
 
-<<<<<<< HEAD
-            time.sleep(0.2)
-=======
->>>>>>> cb1b06a5aa9fe07962989ccee9bdab39ea48d0df
         else:
             print("centaur종료")
             if CentaurShiftTask.is_pressed_shift:
-<<<<<<< HEAD
-                runner.keyboard.release(Key.shift_l)
-                CentaurShiftTask.is_pressed_shift = False
-=======
                 no_detection_count = 0
                 CentaurShiftTask.is_pressed_shift = False
                 runner.release(Key.shift_l)
->>>>>>> cb1b06a5aa9fe07962989ccee9bdab39ea48d0df
 
 
 class BuffTask1:
