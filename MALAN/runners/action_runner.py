@@ -1,6 +1,7 @@
 import time
 from pynput import keyboard, mouse
 from pynput.keyboard import Key
+from pynput.mouse import Button
 
 from utils.interrupt_sleep import interruptible_sleep
 
@@ -11,7 +12,7 @@ class ActionRunner:
 
         self.keyboard = keyboard.Controller()
 
-        self.mouse = mouse.Controller()
+        self.mouse = mouse.Controller() 
 
         self.is_typing = False
 
@@ -61,6 +62,26 @@ class ActionRunner:
     # 더블클릭
     def double_click(self):
         self.click(count=2)
+
+
+    # 휠
+    def scroll(self, dx=0, dy=0, wait=0.04):
+        self._check()
+        self.mouse.scroll(dx=dx, dy=dy)
+        time.sleep(wait)
+
+    
+    # 드래그
+    def mouse_drag(self, sx, sy, ex, ey, gap=0.05):
+        self._check()
+        self.mouse.position = (sx, sy)
+        time.sleep(gap)
+        self.mouse.press(Button.left)
+        time.sleep(gap)
+        self.mouse.position = (ex, ey)
+        time.sleep(gap)
+        self.mouse.release(Button.left)
+        time.sleep(gap)
 
 
     # 텍스트 입력

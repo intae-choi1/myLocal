@@ -2,7 +2,7 @@ from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
 from tasks.boma_task import ShiftToggleTask, JumpSkillTask
-from tasks.common_task import ChannelChangeTask, PutCiderTask, FlJumpTask, NotebookPutCiderTask
+from tasks.common_task import ChannelChangeTask, PutCiderTask, FlJumpTask, NotebookPutCiderTask, CharliTask
 
 
 class InputManager:
@@ -69,6 +69,7 @@ class InputManager:
         try:
             if key == Key.f8:
                 self.automation_manager.start_task(ChannelChangeTask())
+                # self.automation_manager.start_task(CharliTask())
 
             elif key == Key.insert:
                 self.automation_manager.start_task(PutCiderTask())

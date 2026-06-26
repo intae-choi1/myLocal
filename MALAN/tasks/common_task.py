@@ -1,4 +1,4 @@
-import random
+import random, time
 from datetime import datetime, timedelta
 
 import pyautogui as pag
@@ -10,21 +10,21 @@ class ChannelChangeTask:
         pass
 
     def run(self, runner):
-        nx = 560 + 170 * 4       # ※※채널 x방향 n번째 ※※
-        ny = 250 + 60 * 8  # ※※채널 y방향 n번째 ※※
+        nx = 700 + 140 * 5       # ※※채널 x방향 n번째 ※※
+        ny = 482 + 42 * 10  # ※※채널 y방향 n번째 ※※
         while not runner.stop_controller.is_stopped():
             rx = random.randrange(0, 80)
-            ry = random.randrange(0, 11)
-            runner.move_mouse(1695+rx, 1330+ry, 0.05)      #메뉴
-            runner.click(wait=0.06)
-            runner.move_mouse(1695+rx, 975+ry, 0.05)    #채널변경
-            runner.click(wait=0.2)
+            ry = random.randrange(0, 21)
+            runner.move_mouse(1410+rx, 1340+ry, 0.05)      #메뉴
+            runner.click(wait=0.15)
+            runner.move_mouse(1380+rx, 1045+ry, 0.05)    #채널변경
+            runner.click(wait=0.45)
             # runner.move_mouse(1768, 855, 0.01)        #아래 스크롤
             # runner.click()
             runner.move_mouse(nx+rx, ny+ry, 0)    # ※※채널※※
             runner.click()
-            runner.tap(Key.enter, 0.01)
-            runner.tap(Key.esc, 0.06)
+            runner.tap(Key.enter, 0.08)
+            runner.tap(Key.esc, 0.08)
 
 
 class NotebookChannelChangeTask:
@@ -89,20 +89,55 @@ class NotebookPutCiderTask:
                 break
 
 
+class CharliTask:
+    def __init__(self):
+        pass
+
+    def run(self, runner):
+        try:
+            charli_x, charli_y = pag.locateCenterOnScreen("../imgs/charli.png", confidence=0.7)
+            charli_y -= 20
+            for _ in range(18):
+                runner.move_mouse(charli_x, charli_y, 0.1)
+                runner.click(wait=0.15) # 찰리 클릭
+                
+                runner.move_mouse(1700, 770, 0.1)
+                runner.click(wait=0.15) # 다음 클릭
+
+                runner.move_mouse(1650, 870, 0.1)
+                runner.click(wait=0.15) # 예 클릭
+
+                # for _ in range(60):
+                #     runner.scroll(dy=-1, wait=0.02)
+                runner.mouse_drag(1760, 470, 1763, 953)
+                time.sleep(0.2)
+
+                runner.move_mouse(1100, 450, 0.1) # 헥터
+                # runner.move_mouse(1100, 560, 0.1) # 화팽
+                runner.click(wait=0.15) # 예 클릭
+
+                runner.move_mouse(1650, 870, 0.1)
+                runner.click(wait=0.15) # 예 클릭
+
+                runner.move_mouse(1700, 770, 0.1)
+                runner.click(wait=0.15) # 다음 클릭
+            
+        except pag.ImageNotFoundException as e:
+            print(e)
+            
+
 class FlJumpTask:
     def __init__(self):
         pass
 
     def run(self, runner):
-        runner.press(Key.up, 0.02)
-
-        runner.press(Key.right, 0.02)
-        runner.press(Key.space, 0.08)
-        runner.release(Key.right, 0)
-        runner.release(Key.space, 0)
+        runner.press(Key.right, 0.04)
+        runner.press(Key.space, 0.04)
+        runner.release(Key.space, 0.03)
+        runner.release(Key.right, 0.03)
 
         runner.press(Key.left, 0.04)
-        runner.tap("x", 0.01)
-        runner.release(Key.left, 0.16)
-        # runner.wait(0.1)
-        runner.release(Key.up, 0)
+        runner.press("x", 0.02)
+        runner.release("x", 0.06)
+        runner.release(Key.left, 0.04)
+

@@ -1,7 +1,10 @@
 from datetime import datetime, timedelta
 
 from pynput.keyboard import Key
+from pynput import keyboard
 
+
+keyCon = keyboard.Controller()
 
 class ShiftToggleTask:
     toggle = True
@@ -22,5 +25,7 @@ class JumpSkillTask:
         self.char = char
 
     def run(self, runner):
-        runner.tap(self.char)
-        runner.tap(Key.space)
+        # runner.tap(self.char)
+        # runner.tap(Key.space)
+        keyCon.tap(self.char)
+        keyCon.tap(Key.space)
