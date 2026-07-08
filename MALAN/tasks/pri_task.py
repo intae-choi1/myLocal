@@ -25,6 +25,21 @@ class ShiftToggleTask:
         ShiftToggleTask.toggle = not ShiftToggleTask.toggle
 
 
+class ShiftWhileTask:
+    def __init__(self):
+        pass
+
+    def run(self, runner):
+        while not runner.stop_controller.is_stopped():
+            runner.press(Key.shift_l)
+            runner.wait(4)
+            runner.release(Key.shift_l)
+            runner.wait(3.5)
+    
+    def final_do(self, runner):
+        runner.keyboard.release(Key.shift_l)
+
+
 class CentaurShiftTask:
     is_pressed_shift = False
     # model = YOLO("best_redcen.pt")

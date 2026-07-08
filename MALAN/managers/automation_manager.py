@@ -54,6 +54,16 @@ class AutomationManager:
 
 
     # ---------------------------------
+    # Task 토글 (실행 중이면 중지, 정지 중이면 시작)
+    # ---------------------------------
+    def toggle_task(self, task):
+        if self.state == AutomationState.RUNNING:
+            self.stop()
+        else:
+            self.start_task(task)
+
+
+    # ---------------------------------
     # 실제 실행
     # ---------------------------------
     def _run_task(self, task):
@@ -69,6 +79,8 @@ class AutomationManager:
         finally:
             self.state = AutomationState.IDLE
             self.stop_controller.reset()
+            if hasattr(task, "final_do"):
+                task.final_do(self.runner)
 
 
     # ---------------------------------

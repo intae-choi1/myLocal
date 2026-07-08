@@ -33,11 +33,13 @@ class ActionRunner:
         self.keyboard.press(key)
         time.sleep(wait)
 
+
     def release(self, key, wait=0):
         self._check()
         self.keyboard.release(key)
         # self.is_typing = False
         time.sleep(wait)
+
 
     def tap(self, key, wait=0.25):
         self._check()
