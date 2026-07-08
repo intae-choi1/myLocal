@@ -1,11 +1,11 @@
 import time
-import pyautogui as pag
-from pynput.keyboard import Key
 
-# from ultralytics import YOLO
 import cv2
-import numpy as np
 import mss
+import numpy as np
+import pyautogui as pag
+# from ultralytics import YOLO
+from pynput.keyboard import Key
 
 
 sct = mss.mss()

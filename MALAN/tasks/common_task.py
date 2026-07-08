@@ -1,8 +1,12 @@
 import random, time
 from datetime import datetime, timedelta
 
+import mss
 import pyautogui as pag
 from pynput.keyboard import Key
+
+
+sct = mss.mss()
 
 
 class ChannelChangeTask:
@@ -10,21 +14,47 @@ class ChannelChangeTask:
         pass
 
     def run(self, runner):
-        nx = 700 + 140 * 5       # ※※채널 x방향 n번째 ※※
+        # self.do_normal(runner)
+        self.do_special(runner)
+    
+    def do_normal(self, runner):
+        nx = 700 + 140 * 6       # ※※채널 x방향 n번째 ※※
         ny = 482 + 42 * 10  # ※※채널 y방향 n번째 ※※
         while not runner.stop_controller.is_stopped():
             rx = random.randrange(0, 80)
             ry = random.randrange(0, 21)
+            
             runner.move_mouse(1410+rx, 1340+ry, 0.05)      #메뉴
-            runner.click(wait=0.15)
-            runner.move_mouse(1380+rx, 1045+ry, 0.05)    #채널변경
-            runner.click(wait=0.45)
-            # runner.move_mouse(1768, 855, 0.01)        #아래 스크롤
-            # runner.click()
+            runner.click(wait=0.155)
+            
+            runner.tap(Key.enter, 0.45)
+            # runner.move_mouse(1380+rx, 1045+ry, 0.05)    #채널변경
+            # runner.click(wait=0.25)
+
             runner.move_mouse(nx+rx, ny+ry, 0)    # ※※채널※※
             runner.click()
-            runner.tap(Key.enter, 0.08)
-            runner.tap(Key.esc, 0.08)
+            
+            runner.tap(Key.enter, 0.1)
+            runner.tap(Key.esc, 0.1)
+
+
+    def do_special(self, runner):
+        monitor = {"left": 950, "top": 550, "width": 1, "height": 1}
+        while not runner.stop_controller.is_stopped():
+            runner.tap(Key.esc, 0.1)
+            runner.tap(Key.enter, 0.4)
+            runner.tap(Key.right, 0.2)
+            img = sct.grab(monitor)
+            color = img.pixel(0, 0)  # (R, G, B)
+            if color == (221, 221, 221):
+                runner.tap(Key.enter, 0.1)
+                print("채널찾기종료")
+                break
+                # runner.tap(Key.esc, 0.5)
+            else:
+                runner.tap(Key.esc, 0.2)
+        if color == (238, 238, 238):
+            pass
 
 
 class NotebookChannelChangeTask:
@@ -112,8 +142,8 @@ class CharliTask:
                 runner.mouse_drag(1760, 470, 1763, 953)
                 time.sleep(0.2)
 
-                runner.move_mouse(1100, 450, 0.1) # 헥터
-                # runner.move_mouse(1100, 560, 0.1) # 화팽
+                # runner.move_mouse(1100, 450, 0.1) # 헥터
+                runner.move_mouse(1100, 560, 0.1) # 화팽
                 runner.click(wait=0.15) # 예 클릭
 
                 runner.move_mouse(1650, 870, 0.1)
