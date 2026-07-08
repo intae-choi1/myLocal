@@ -114,7 +114,7 @@ class CharliTask:
 
                 runner.move_mouse(1100, 450, 0.1) # 헥터
                 # runner.move_mouse(1100, 560, 0.1) # 화팽
-                runner.click(wait=0.15) # 예 클릭
+                runner.click(wait=0.15)
 
                 runner.move_mouse(1650, 870, 0.1)
                 runner.click(wait=0.15) # 예 클릭
@@ -125,6 +125,43 @@ class CharliTask:
         except pag.ImageNotFoundException as e:
             print(e)
             
+
+class NotebookCharliTask:
+    def __init__(self):
+        pass
+
+    def run(self, runner):
+        try:
+            charli_x, charli_y = pag.locateCenterOnScreen("../imgs/charli.png", confidence=0.7)
+            charli_y -= 20
+            for _ in range(13):
+                runner.move_mouse(charli_x, charli_y, 0.1)
+                runner.click(wait=0.15) # 찰리 클릭
+                
+                runner.move_mouse(1170, 590, 0.1)
+                runner.click(wait=0.25) # 다음 클릭
+
+                runner.move_mouse(1140, 640, 0.1)
+                runner.click(wait=0.25) # 예 클릭
+
+                # for _ in range(60):
+                #     runner.scroll(dy=-1, wait=0.02)
+                runner.mouse_drag(1200, 430, 1220, 700)
+                time.sleep(0.3)
+
+                runner.move_mouse(870, 425, 0.1) # 헥터
+                # runner.move_mouse(870, 480, 0.1) # 화팽
+                runner.click(wait=0.25)
+
+                runner.move_mouse(1140, 640, 0.1)
+                runner.click(wait=0.25) # 예 클릭
+
+                runner.move_mouse(1170, 590, 0.1)
+                runner.click(wait=0.25) # 다음 클릭
+            
+        except pag.ImageNotFoundException as e:
+            print(e)
+
 
 class FlJumpTask:
     def __init__(self):

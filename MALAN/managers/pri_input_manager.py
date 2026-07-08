@@ -5,7 +5,7 @@ from pynput.keyboard import Key, KeyCode
 
 from models.state import AutomationState
 from tasks.pri_task import ShiftToggleTask, CentaurShiftTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
-from tasks.common_task import NotebookChannelChangeTask, NotebookPutCiderTask
+from tasks.common_task import NotebookChannelChangeTask, NotebookPutCiderTask, NotebookCharliTask
 
 class InputManager:
     def __init__(self, automation_manager):
@@ -75,7 +75,8 @@ class InputManager:
                     self.automation_manager.start_task(PressShiftTask())
 
             elif key == Key.f8:
-                self.automation_manager.start_task(NotebookChannelChangeTask())
+                # self.automation_manager.start_task(NotebookChannelChangeTask())
+                self.automation_manager.start_task(NotebookCharliTask())
             
             elif key == Key.f12:
                 self.automation_manager.start_task(NotebookPutCiderTask())
