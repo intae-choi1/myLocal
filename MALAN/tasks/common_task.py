@@ -208,3 +208,25 @@ class FlJumpTask:
         runner.release("x", 0.06)
         runner.release(Key.left, 0.04)
 
+
+class DropItemTask:
+    def __init__(self):
+        pass
+
+    def run(self, runner):
+        stand_x, stand_y = pag.locateCenterOnScreen("../imgs/equipment.png", confidence=0.7) #701 455
+        for i in range(28):
+            try:
+                if i < 4:
+                    continue
+                x = stand_x + 10  + (i%4)*70 + (i//24)*300
+                y = stand_y + 70 + (i//4)*70 - (i//24)*420
+                runner.move_mouse(x, y, 0.04)
+                runner.click(wait=0.1)
+                runner.move_mouse(stand_x-100, stand_y, 0.04)
+                runner.click(wait=0.2)
+                runner.tap(Key.enter)
+                runner.wait(0.25)
+            except pag.ImageNotFoundException as e:
+                print(e)
+                break

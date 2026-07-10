@@ -2,7 +2,7 @@ from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
 from tasks.boma_task import ShiftToggleTask, JumpSkillTask
-from tasks.common_task import ChannelChangeTask, PutCiderTask, FlJumpTask, NotebookPutCiderTask, CharliTask
+from tasks.common_task import ChannelChangeTask, PutCiderTask, FlJumpTask, NotebookPutCiderTask, CharliTask, DropItemTask
 
 
 class InputManager:
@@ -69,10 +69,11 @@ class InputManager:
         try:
             if key == Key.f8:
                 self.automation_manager.start_task(ChannelChangeTask())
-                # self.automation_manager.start_task(CharliTask())
 
             elif key == Key.insert:
-                self.automation_manager.start_task(PutCiderTask())
+                # self.automation_manager.start_task(PutCiderTask())
+                self.automation_manager.start_task(DropItemTask())
+                # self.automation_manager.start_task(CharliTask())
                 
             # 키조합 인식
             # elif self.is_pressed("Key.ctrl_l") and (isinstance(key, KeyCode) and key.vk == 65):
