@@ -17,12 +17,35 @@ class ShiftToggleTask:
         pass
 
     def run(self, runner):
-        if ShiftToggleTask.toggle:
-            runner.press(Key.shift_l)
-        else:
-            runner.release(Key.shift_l)
+        # if ShiftToggleTask.toggle:
+        #     runner.press(Key.shift_l)
+        # else:
+        #     runner.release(Key.shift_l)
 
-        ShiftToggleTask.toggle = not ShiftToggleTask.toggle
+        # ShiftToggleTask.toggle = not ShiftToggleTask.toggle
+        while not runner.stop_controller.is_stopped():
+            runner.press(Key.shift_l)
+            runner.wait(45.5)
+            runner.release(Key.shift_l)
+            runner.wait(0.55)
+
+            runner.press(Key.left)
+            runner.wait(0.1)
+            runner.release(Key.left)
+            runner.wait(0.55)
+
+            runner.press(Key.shift_l)
+            runner.wait(1.5)
+            runner.release(Key.shift_l)
+            runner.wait(0.55)
+            
+            runner.press(Key.right)
+            runner.wait(0.1)
+            runner.release(Key.right)
+            runner.wait(0.55)
+
+    def final_do(self, runner):
+        runner.keyboard.release(Key.shift_l)
 
 
 class ShiftWhileTask:
@@ -32,9 +55,9 @@ class ShiftWhileTask:
     def run(self, runner):
         while not runner.stop_controller.is_stopped():
             runner.press(Key.shift_l)
-            runner.wait(4)
+            runner.wait(3)
             runner.release(Key.shift_l)
-            runner.wait(3.5)
+            runner.wait(4)
     
     def final_do(self, runner):
         runner.keyboard.release(Key.shift_l)
@@ -135,10 +158,10 @@ class TellHealTask:
 
     def run(self, runner):
         runner.release(Key.shift_l, 0.05)
-        runner.tap("x", 0.05)
+        # runner.tap("x", 0.05)
 
-        runner.press(Key.shift_l, 0.15)
-        runner.release(Key.shift_l, 0)
+        # runner.press(Key.shift_l, 0.15)
+        # runner.release(Key.shift_l, 0)
 
 
 class PressShiftTask:

@@ -48,8 +48,9 @@ class InputManager:
         
         # elif key == Key.caps_lock or key == Key.insert:
         elif key == Key.caps_lock:
+            self.automation_manager.toggle_task(ShiftToggleTask())
             # self.automation_manager.start_task(ShiftToggleTask())
-            self.automation_manager.toggle_task(ShiftWhileTask())
+            # self.automation_manager.toggle_task(ShiftWhileTask())
             # self.automation_manager.start_task(CentaurShiftTask())
 
 
