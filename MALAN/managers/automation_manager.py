@@ -79,8 +79,8 @@ class AutomationManager:
         finally:
             self.state = AutomationState.IDLE
             self.stop_controller.reset()
-            if hasattr(task, "final_do"):
-                task.final_do(self.runner)
+            if hasattr(task, "do_final"):
+                task.do_final(self.runner)
 
 
     # ---------------------------------

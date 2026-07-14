@@ -14,10 +14,10 @@ class ChannelChangeTask:
         pass
 
     def run(self, runner):
-        # self.do_normal(runner)
+        # self.do_origin(runner)
         self.do_special(runner)
     
-    def do_normal(self, runner):
+    def do_origin(self, runner):
         nx = 700 + 140 * 6       # ※※채널 x방향 n번째 ※※
         ny = 482 + 42 * 10  # ※※채널 y방향 n번째 ※※
         while not runner.stop_controller.is_stopped():
