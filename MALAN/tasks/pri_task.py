@@ -22,12 +22,10 @@ class ShiftToggleTask:
         # self.do_special2(runner)
     
     def do_origin(self, runner):
-        if ShiftToggleTask.toggle:
+        while not runner.stop_controller.is_stopped():
             runner.press(Key.shift_l)
-        else:
+            runner.wait(51)
             runner.release(Key.shift_l)
-
-        ShiftToggleTask.toggle = not ShiftToggleTask.toggle
 
 
     def do_special(self, runner):
@@ -178,6 +176,7 @@ class PressShiftTask:
         pass
 
     def run(self, runner):
+        return
         time.sleep(0.4)
         runner.press(Key.shift_l)
 

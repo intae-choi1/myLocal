@@ -4,7 +4,7 @@ from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
 from models.state import AutomationState
-from tasks.pri_task import ShiftToggleTask, ShiftWhileTask, CentaurShiftTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
+from tasks.pri_task import ShiftToggleTask, CentaurShiftTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
 from tasks.common_task import NotebookChannelChangeTask, NotebookPutCiderTask, NotebookCharliTask
 
 class InputManager:
@@ -48,8 +48,7 @@ class InputManager:
         
         # elif key == Key.caps_lock or key == Key.insert:
         elif key == Key.caps_lock:
-            # self.automation_manager.toggle_task(ShiftToggleTask())
-            self.automation_manager.start_task(ShiftToggleTask())
+            self.automation_manager.toggle_task(ShiftToggleTask())
             # self.automation_manager.start_task(CentaurShiftTask())
 
 
