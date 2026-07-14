@@ -137,13 +137,12 @@ class CharliTask:
                 runner.move_mouse(1650, 870, 0.1)
                 runner.click(wait=0.15) # 예 클릭
 
-                # for _ in range(60):
-                #     runner.scroll(dy=-1, wait=0.02)
+                # runner.move_mouse(1100, 750, 0.1) # 루나픽시
                 runner.mouse_drag(1760, 470, 1763, 953)
                 time.sleep(0.2)
 
-                # runner.move_mouse(1100, 450, 0.1) # 헥터
-                runner.move_mouse(1100, 560, 0.1) # 화팽
+                runner.move_mouse(1100, 450, 0.1) # 헥터
+                # runner.move_mouse(1100, 560, 0.1) # 화팽
                 runner.click(wait=0.15) # 예 클릭
 
                 runner.move_mouse(1650, 870, 0.1)
