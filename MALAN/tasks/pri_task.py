@@ -17,9 +17,9 @@ class ShiftToggleTask:
         pass
 
     def run(self, runner):
-        # self.do_origin(runner)
+        self.do_origin(runner)
         # self.do_special(runner)
-        self.do_special2(runner)
+        # self.do_special2(runner)
     
     def do_origin(self, runner):
         if ShiftToggleTask.toggle:
@@ -63,26 +63,11 @@ class ShiftToggleTask:
     def do_special2(self, runner):
         while not runner.stop_controller.is_stopped():
             runner.press(Key.shift_l)
-            runner.wait(1)
+            runner.wait(0.4)
             runner.release(Key.shift_l)
             runner.wait(6)
     
 
-    def do_final(self, runner):
-        runner.keyboard.release(Key.shift_l)
-
-
-class ShiftWhileTask:
-    def __init__(self):
-        pass
-
-    def run(self, runner):
-        while not runner.stop_controller.is_stopped():
-            runner.press(Key.shift_l)
-            runner.wait(3)
-            runner.release(Key.shift_l)
-            runner.wait(4)
-    
     def do_final(self, runner):
         runner.keyboard.release(Key.shift_l)
 
