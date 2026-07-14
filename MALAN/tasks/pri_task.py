@@ -19,7 +19,7 @@ class ShiftToggleTask:
     def run(self, runner):
         # self.do_origin(runner)
         # self.do_special(runner)
-        # self.do_special2(runner)
+        self.do_special2(runner)
     
     def do_origin(self, runner):
         if ShiftToggleTask.toggle:
@@ -182,7 +182,7 @@ class TellHealTask:
 
     def run(self, runner):
         runner.release(Key.shift_l, 0.05)
-        # runner.tap("x", 0.05)
+        runner.tap("x", 0.05)
 
         # runner.press(Key.shift_l, 0.15)
         # runner.release(Key.shift_l, 0)
