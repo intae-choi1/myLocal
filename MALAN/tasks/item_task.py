@@ -32,8 +32,8 @@ class PutCiderTask:
         pass
 
     def run(self, runner):
-        post_stand_x, post_stand_y = pag.locateCenterOnScreen("../imgs/post_meso.png", confidence=0.7)
-        cider_stand_x, cider_stand_y = pag.locateCenterOnScreen("../imgs/post_cider.png", confidence=0.9, region=(1480, 40, 1000, 1400))
+        post_stand_x, post_stand_y = pag.locateCenterOnScreen("../imgs/post_meso.png", confidence=0.8)
+        cider_stand_x, cider_stand_y = pag.locateCenterOnScreen("../imgs/post_cider.png", confidence=0.8, region=(1480, 40, 1000, 1400))
         for i in range(12):
             try:
                 post_x = post_stand_x + 10  + (i%6)*80
@@ -54,14 +54,14 @@ class NotebookPutCiderTask:
         pass
 
     def run(self, runner):
-        post_stand_x, post_stand_y = pag.locateCenterOnScreen("../imgs/post_meso.png", confidence=0.7)
-        cider_stand_x, cider_stand_y = pag.locateCenterOnScreen("../imgs/post_cider.png", confidence=0.9, region=(1480, 40, 1000, 1400))
-        for i in range(12):
+        post_stand_x, post_stand_y = pag.locateCenterOnScreen("../imgs/post_meso.png", confidence=0.8)
+        cider_stand_x, cider_stand_y = pag.locateCenterOnScreen("../imgs/post_cider.png", confidence=0.8, region=(1300, 300, 500, 700))
+        for i in range(7):
             try:
-                post_x = post_stand_x + 10  + (i%6)*80
-                post_y = post_stand_y - 150 + (i//6)*80
-                cider_x = cider_stand_x + (i%4)*70
-                cider_y = cider_stand_y + (i//4)*70
+                post_x = post_stand_x + 5  + (i%6)*40
+                post_y = post_stand_y - 75 + (i//6)*40
+                cider_x = cider_stand_x + (i%4)*35
+                cider_y = cider_stand_y + (i//4)*35
                 runner.move_mouse(cider_x, cider_y, 0.1)
                 runner.click(wait=0.15)
                 runner.move_mouse(post_x, post_y, 0.04)

@@ -36,7 +36,7 @@ class InputManager:
     def on_press(self, key):
         normalized = self.normalize_key(key)
         self.pressed_keys.add(normalized)
-        print(self.pressed_keys)
+        # print(self.pressed_keys)
         
         if key in (Key.up, Key.left, Key.down, Key.right):
             if self.tellheal_enabled:

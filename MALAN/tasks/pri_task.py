@@ -129,7 +129,7 @@ class BuffTask1:
         runner.press(Key.delete, 1.1)
         runner.release(Key.delete, 0.1)
 
-        runner.press(Key.shift_l, 0.8)
+        runner.press(Key.shift_l, 1.4)
         runner.release(Key.shift_l)
 
 
@@ -140,17 +140,17 @@ class BuffTask2:
     def run(self, runner):
         x, y = pag.locateCenterOnScreen("../imgs/cashop.png", confidence=0.7, region=(0, 500, 1920, 900))
         a = 160 # 데탑
-        # a = 110 # 노트북
+        a = 80 # 노트북
         runner.move_mouse(x, y-a, 0.02)
         runner.click(wait=1.5)
 
-        runner.press(Key.end, 0.6)
-        runner.release(Key.end, 0.4)
+        runner.press(Key.end, 0.2)
+        runner.release(Key.end, 0.1)
 
-        runner.press(Key.delete, 0.2)
+        runner.press(Key.delete, 1.1)
         runner.release(Key.delete, 0.1)
 
-        runner.wait(1)
+        # runner.wait(1)
 
         runner.tap(Key.enter)
         runner.type_text("/파티탈퇴")

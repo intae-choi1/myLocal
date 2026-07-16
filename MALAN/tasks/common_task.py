@@ -61,11 +61,11 @@ class NotebookChannelChangeTask:
         # self.do_special(runner)
     
     def do_origin(self, runner):
-        nx = 710 + 140 * 1       # ※※채널 x방향 n번째 ※※
-        ny = 490 + 42 * 10  # ※※채널 y방향 n번째 ※※
+        nx = 975 + 70 * 3       # ※※채널 x방향 n번째 ※※
+        ny = 550 + 21 * 10  # ※※채널 y방향 n번째 ※※
         while not runner.stop_controller.is_stopped():
-            rx = random.randrange(0, 80)
-            ry = random.randrange(0, 21)
+            rx = random.randrange(0, 50)
+            ry = random.randrange(0, 11)
             
             runner.tap(Key.esc, 0.1)
             runner.tap(Key.enter, 0.4)
@@ -78,7 +78,7 @@ class NotebookChannelChangeTask:
 
 
     def do_special(self, runner):
-        monitor = {"left": 950, "top": 550, "width": 1, "height": 1}
+        monitor = {"left": 1100, "top": 585, "width": 1, "height": 1}
         # monitor = {"left": xx, "top": yy, "width": 1, "height": 1} # 채널 10줄안되면 수정해서 사용
         while not runner.stop_controller.is_stopped():
             runner.tap(Key.esc, 0.1)
