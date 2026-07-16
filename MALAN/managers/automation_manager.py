@@ -11,15 +11,10 @@ from runners.action_runner import ActionRunner
 class AutomationManager:
     def __init__(self):
         self.state = AutomationState.IDLE
-
         self.lock = threading.Lock()
-
         self.thread = None
-
         self.stop_controller = StopController()
-
         self.runner = ActionRunner(self.stop_controller)
-
 
     # ---------------------------------
     # 실행 가능 여부
@@ -30,7 +25,6 @@ class AutomationManager:
         if window is not None:
             title = window.title
         return (self.state == AutomationState.IDLE and title.startswith("Maple"))
-
 
     # ---------------------------------
     # Task 시작
@@ -52,7 +46,6 @@ class AutomationManager:
 
             self.thread.start()
 
-
     # ---------------------------------
     # Task 토글 (실행 중이면 중지, 정지 중이면 시작)
     # ---------------------------------
@@ -61,7 +54,6 @@ class AutomationManager:
             self.stop()
         else:
             self.start_task(task)
-
 
     # ---------------------------------
     # 실제 실행
@@ -81,7 +73,6 @@ class AutomationManager:
             self.stop_controller.reset()
             if hasattr(task, "do_final"):
                 task.do_final(self.runner)
-
 
     # ---------------------------------
     # 중단

@@ -22,13 +22,10 @@ class ShiftToggleTask:
         # self.do_special2(runner)
     
     def do_origin(self, runner):
-        if ShiftToggleTask.toggle:
+        while not runner.stop_controller.is_stopped():
             runner.press(Key.shift_l)
-        else:
+            runner.wait(51)
             runner.release(Key.shift_l)
-
-        ShiftToggleTask.toggle = not ShiftToggleTask.toggle
-
 
     def do_special(self, runner):
         i = 0
@@ -58,7 +55,6 @@ class ShiftToggleTask:
             runner.wait(0.1)
             runner.release(Key.left)
             runner.wait(0.45)
-
     
     def do_special2(self, runner):
         while not runner.stop_controller.is_stopped():
@@ -67,7 +63,6 @@ class ShiftToggleTask:
             runner.release(Key.shift_l)
             runner.wait(6)
     
-
     def do_final(self, runner):
         runner.keyboard.release(Key.shift_l)
 
@@ -143,18 +138,19 @@ class BuffTask2:
         pass
 
     def run(self, runner):
-        x, y = pag.locateCenterOnScreen("../imgs/cashop.png", confidence=0.7, region=(0, 800, 1920, 280))
-        runner.move_mouse(x, y-110, 0.1)
-        runner.click(wait=0.1)
+        x, y = pag.locateCenterOnScreen("../imgs/cashop.png", confidence=0.7, region=(0, 500, 1920, 900))
+        a = 160 # 데탑
+        # a = 110 # 노트북
+        runner.move_mouse(x, y-a, 0.02)
+        runner.click(wait=1.5)
 
-        runner.press(Key.end, 0.2)
-        runner.release(Key.end, 0.1)
+        runner.press(Key.end, 0.6)
+        runner.release(Key.end, 0.4)
 
-        runner.press(Key.delete, 1.5)
+        runner.press(Key.delete, 0.2)
         runner.release(Key.delete, 0.1)
 
-        # runner.press(Key.shift_l, 0.8)
-        # runner.release(Key.shift_l)
+        runner.wait(1)
 
         runner.tap(Key.enter)
         runner.type_text("/파티탈퇴")
@@ -178,7 +174,6 @@ class PressShiftTask:
         pass
 
     def run(self, runner):
+        return
         time.sleep(0.4)
         runner.press(Key.shift_l)
-
-

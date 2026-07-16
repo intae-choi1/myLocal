@@ -4,8 +4,9 @@ from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
 from models.state import AutomationState
-from tasks.pri_task import ShiftToggleTask, ShiftWhileTask, CentaurShiftTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
-from tasks.common_task import NotebookChannelChangeTask, NotebookPutCiderTask, NotebookCharliTask
+from tasks.pri_task import ShiftToggleTask, CentaurShiftTask, BuffTask1, BuffTask2, TellHealTask, PressShiftTask
+from tasks.common_task import NotebookChannelChangeTask
+from tasks.item_task import NotebookPutCiderTask, NotebookCharliTask
 
 class InputManager:
     def __init__(self, automation_manager):
@@ -16,7 +17,6 @@ class InputManager:
             on_press=self.on_press,
             on_release=self.on_release
         )
-
 
     def normalize_key(self, key):
         # 특수키
@@ -30,43 +30,32 @@ class InputManager:
         except AttributeError:
             return str(key)
 
-
     def is_pressed(self, *keys):
         return all(k in self.pressed_keys for k in keys)
-        
-
 
     def on_press(self, key):
-        if self.automation_manager.runner.is_typing:
-            return
         normalized = self.normalize_key(key)
         self.pressed_keys.add(normalized)
+        print(self.pressed_keys)
         
         if key in (Key.up, Key.left, Key.down, Key.right):
             if self.tellheal_enabled:
                 self.automation_manager.start_task(TellHealTask())
         
-        # elif key == Key.caps_lock or key == Key.insert:
         elif key == Key.caps_lock:
-            # self.automation_manager.toggle_task(ShiftToggleTask())
-            self.automation_manager.start_task(ShiftToggleTask())
+            self.automation_manager.toggle_task(ShiftToggleTask())
             # self.automation_manager.start_task(CentaurShiftTask())
-
-
 
     def on_release(self, key):
         if key == Key.f4: # 종료
             return False
-        
         elif key == Key.f7:
             self.tellheal_enabled = not self.tellheal_enabled
             self.automation_manager.runner.release(Key.shift_l)
-
         elif key == Key.f9: # 정지
             self.automation_manager.stop()
             return
-
-        elif key == Key.media_play_pause:
+        elif key == Key.media_play_pause or key == Key.pause:
                 print(self.automation_manager.runner.mouse.position)
 
         try:
@@ -76,11 +65,11 @@ class InputManager:
                     self.automation_manager.start_task(PressShiftTask())
 
             elif key == Key.f8:
-                # self.automation_manager.start_task(NotebookChannelChangeTask())
-                self.automation_manager.start_task(NotebookCharliTask())
+                self.automation_manager.start_task(NotebookChannelChangeTask())
             
             elif key == Key.f12:
                 self.automation_manager.start_task(NotebookPutCiderTask())
+                # self.automation_manager.start_task(NotebookCharliTask())
 
             elif (hasattr(key, "vk") and key.vk == 96) or key == Key.insert:
                 task = BuffTask1()
@@ -99,7 +88,6 @@ class InputManager:
             normalized = self.normalize_key(key)
             self.pressed_keys.discard(normalized)
 
-            
     def start(self):
 
         self.listener.start()
@@ -110,7 +98,6 @@ class InputManager:
         self.listener.join()
 
         print("종료")
-
 
 def check_magatia():
     import threading
