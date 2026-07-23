@@ -68,3 +68,14 @@ class JumpSkillTask:
         # runner.tap(Key.space)
         runner.keyboard.tap(self.char)
         runner.keyboard.tap(Key.space)
+
+
+class MovingStormTask:
+    def __init__(self):
+        pass
+
+    def run(self, runner):
+        runner.press(Key.shift_l)
+        runner.wait(0.04)
+        runner.release(Key.shift_l)
+        runner.wait(0.04)

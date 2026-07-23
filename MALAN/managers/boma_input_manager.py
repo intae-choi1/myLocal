@@ -1,7 +1,7 @@
 from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
-from tasks.boma_task import ShiftToggleTask, JumpSkillTask
+from tasks.boma_task import ShiftToggleTask, JumpSkillTask, MovingStormTask
 from tasks.common_task import ChannelChangeTask, FlJumpTask
 from tasks.item_task import PutCiderTask, CharliTask, DropItemTask, BuyCiderTask
 
@@ -10,6 +10,7 @@ class InputManager:
     def __init__(self, automation_manager):
         self.automation_manager = automation_manager
         self.pressed_keys = set()
+        self.movingstorm_enabled = False
         self.listener = keyboard.Listener(
             on_press=self.on_press,
             on_release=self.on_release
@@ -39,7 +40,7 @@ class InputManager:
             self.automation_manager.toggle_task(ShiftToggleTask())
         
         elif key == Key.f1:
-            # return
+            return
             self.automation_manager.start_task(FlJumpTask())
 
         # elif key == KeyCode(char='b'):
@@ -60,15 +61,16 @@ class InputManager:
         
         try:
             if key == Key.f8:
+                return
                 self.automation_manager.start_task(ChannelChangeTask())
 
             elif key == Key.f12:
                 self.automation_manager.start_task(BuyCiderTask())
 
             elif key == Key.insert:
-                self.automation_manager.start_task(PutCiderTask())
+                # self.automation_manager.start_task(PutCiderTask())
                 # self.automation_manager.start_task(CharliTask())
-                # self.automation_manager.start_task(DropItemTask())
+                self.automation_manager.start_task(DropItemTask())
                 
             # 키조합 인식
             # elif self.is_pressed("Key.ctrl_l") and (isinstance(key, KeyCode) and key.vk == 65):

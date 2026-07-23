@@ -14,13 +14,13 @@ class BuyCiderTask:
         pass
 
     def run(self, runner):
-        for _ in range(9):
+        for _ in range(50):
             try:
                 for i in range(1, 4):
                     if i==3: runner.wait(0.1)
                     x, y = pag.locateCenterOnScreen(f"../imgs/shop_cider_{i}.png", confidence=0.9)
                     runner.move_mouse(x, y, 0.01)
-                    runner.click(wait=0.01)
+                    runner.click(wait=0.08)
                 
             except pag.ImageNotFoundException as e:
                 print(e)
