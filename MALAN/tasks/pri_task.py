@@ -163,10 +163,12 @@ class TellHealTask:
 
     def run(self, runner):
         runner.release(Key.shift_l, 0.05)
-        runner.tap("x", 0.05)
+        runner.press("x", 0.3)
+        runner.release("x", 0)
+        # runner.tap("x", 0.3)
 
-        # runner.press(Key.shift_l, 0.12)
-        # runner.release(Key.shift_l, 0)
+        runner.press(Key.shift_l, 0.2)
+        runner.release(Key.shift_l, 0)
 
 
 class PressShiftTask:

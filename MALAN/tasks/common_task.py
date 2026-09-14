@@ -14,8 +14,8 @@ class ChannelChangeTask:
         pass
 
     def run(self, runner):
-        self.do_origin(runner)
-        # self.do_special(runner)
+        # self.do_origin(runner)
+        self.do_special(runner)
     
     def do_origin(self, runner):
         nx = 710 + 140 * 1       # ※※채널 x방향 n번째 ※※
@@ -35,15 +35,16 @@ class ChannelChangeTask:
 
 
     def do_special(self, runner):
-        monitor = {"left": 950, "top": 550, "width": 1, "height": 1}
-        # monitor = {"left": xx, "top": yy, "width": 1, "height": 1} # 채널 10줄안되면 수정해서 사용
+        # monitor = {"left": 846, "top": 610, "width": 1, "height": 1} # 채널 10줄안되면 수정해서 사용 6줄일때 846,610
+        monitor = {"left": 846, "top": 526, "width": 1, "height": 1} 
         while not runner.stop_controller.is_stopped():
             runner.tap(Key.esc, 0.1)
             runner.tap(Key.enter, 0.4)
             runner.tap(Key.right, 0.2)
             img = sct.grab(monitor)
             color = img.pixel(0, 0)  # (R, G, B)
-            if color == (221, 221, 221):
+            print(color)
+            if color == (204, 204, 187):
                 runner.tap(Key.enter, 0.1)
                 print("채널찾기종료")
                 break
@@ -102,8 +103,8 @@ class FlJumpTask:
     def run(self, runner):
         runner.press(Key.right, 0.04)
         runner.press(Key.space, 0.04)
-        runner.release(Key.space, 0.03)
-        runner.release(Key.right, 0.03)
+        runner.release(Key.space, 0.04)
+        runner.release(Key.right, 0.04)
 
         runner.press(Key.left, 0.04)
         runner.press("x", 0.02)

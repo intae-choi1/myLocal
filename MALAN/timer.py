@@ -4,7 +4,7 @@ import tkinter as tk
 from pynput import keyboard
 
 
-TIMER_COUNT = 3
+TIMER_COUNT = 4
 COUNTDOWN_TIME = 120
 ALERT_TIME = 10
 UPDATE_MS = 50  # 0.1초12

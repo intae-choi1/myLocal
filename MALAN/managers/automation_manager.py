@@ -63,7 +63,7 @@ class AutomationManager:
             task.run(self.runner)
 
         except InterruptedError:
-            print("작업 중단")
+            pass
 
         except Exception as e:
             print("오류 발생:", e)

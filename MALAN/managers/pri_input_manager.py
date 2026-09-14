@@ -61,7 +61,7 @@ class InputManager:
         try:
             if key in (Key.up, Key.left, Key.down, Key.right):
                 if self.tellheal_enabled:
-                    return
+                    # return
                     self.automation_manager.state = AutomationState.IDLE
                     self.automation_manager.start_task(PressShiftTask())
 

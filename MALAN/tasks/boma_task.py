@@ -64,10 +64,12 @@ class JumpSkillTask:
         self.char = char
 
     def run(self, runner):
-        # runner.tap(self.char)
-        # runner.tap(Key.space)
-        runner.keyboard.tap(self.char)
-        runner.keyboard.tap(Key.space)
+        runner.press(Key.space, 0.25)
+        runner.release(Key.space, 0.08)
+        runner.press(self.char, 0.18)
+        runner.release(self.char, 0)
+        # runner.keyboard.tap(self.char)
+        # runner.keyboard.tap(Key.space)
 
 
 class MovingStormTask:

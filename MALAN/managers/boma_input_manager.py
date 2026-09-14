@@ -43,8 +43,10 @@ class InputManager:
             return
             self.automation_manager.start_task(FlJumpTask())
 
-        # elif key == KeyCode(char='b'):
-        #     self.automation_manager.start_task(JumpSkillTask('x'))
+        elif key == KeyCode(char='b'):
+            return
+            # self.automation_manager.start_task(JumpSkillTask('x'))
+            self.automation_manager.start_task(JumpSkillTask(Key.shift_l))
 
         # elif key == KeyCode(char='n'):
         #     self.automation_manager.start_task(JumpSkillTask('c'))
@@ -61,13 +63,14 @@ class InputManager:
         
         try:
             if key == Key.f8:
-                return
+                # return
                 self.automation_manager.start_task(ChannelChangeTask())
 
             elif key == Key.f12:
                 self.automation_manager.start_task(BuyCiderTask())
 
             elif key == Key.insert:
+                return
                 # self.automation_manager.start_task(PutCiderTask())
                 # self.automation_manager.start_task(CharliTask())
                 self.automation_manager.start_task(DropItemTask())

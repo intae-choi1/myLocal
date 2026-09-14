@@ -16,12 +16,13 @@ class BuyCiderTask:
     def run(self, runner):
         for _ in range(50):
             try:
-                for i in range(1, 4):
+                for i in range(1, 3):
                     if i==3: runner.wait(0.1)
                     x, y = pag.locateCenterOnScreen(f"../imgs/shop_cider_{i}.png", confidence=0.9)
                     runner.move_mouse(x, y, 0.01)
-                    runner.click(wait=0.08)
-                
+                    runner.click(wait=0.12)
+                runner.tap(Key.enter, wait=0.18)
+            
             except pag.ImageNotFoundException as e:
                 print(e)
                 break
@@ -76,6 +77,10 @@ class CharliTask:
         pass
 
     def run(self, runner):
+        self.do_special(runner)
+
+
+    def do_origin(self, runner):
         try:
             charli_x, charli_y = pag.locateCenterOnScreen("../imgs/charli.png", confidence=0.7)
             charli_y -= 20
@@ -105,7 +110,25 @@ class CharliTask:
             
         except pag.ImageNotFoundException as e:
             print(e)
+
+    def do_special(self, runner):
+        for _ in range(30):
+            runner.tap(".", 0.2)
+            runner.tap(Key.enter, 0.2)
+            runner.tap(Key.right, 0.2)
+            runner.tap(Key.enter, 0.2)
+            ruster = 9
+            hector = 13
+            white = 16
+            for _ in range(ruster):
+                runner.tap(Key.down, 0.05)
+            runner.tap(Key.enter, 0.2)
+            runner.tap(Key.right, 0.2)
+            runner.tap(Key.enter, 0.2)
+            runner.tap(Key.enter, 0.2)
+
             
+
 
 class NotebookCharliTask:
     def __init__(self):
