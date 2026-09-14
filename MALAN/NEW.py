@@ -425,7 +425,7 @@ class Runner:
             elif self.substate == "WAIT_ATTACK" and self.action_done(1.5):
                 self.release("shift")
                 self.substate = None
-                state = State.MOVE_TO_ATTACK
+                self.state = State.MOVE_TO_ATTACK
             return
 
 
