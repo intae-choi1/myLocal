@@ -14,18 +14,31 @@ class BuyCiderTask:
         pass
 
     def run(self, runner):
-        for _ in range(50):
+        for _ in range(36):
             try:
-                for i in range(1, 3):
-                    if i==3: runner.wait(0.1)
-                    x, y = pag.locateCenterOnScreen(f"../imgs/shop_cider_{i}.png", confidence=0.9)
-                    runner.move_mouse(x, y, 0.01)
-                    runner.click(wait=0.12)
-                runner.tap(Key.enter, wait=0.18)
+                x, y = pag.locateCenterOnScreen(f"../imgs/shop_cider_1.png", confidence=0.9)
+                x += random.randrange(15, 100)
+                y += random.randrange(-20, 20)
+                runner.move_mouse(x, y, 0.01)
+                runner.click(wait=0.05)
+                runner.click(wait=0.15)
+                runner.tap(Key.enter, wait=0.1)
             
             except pag.ImageNotFoundException as e:
                 print(e)
                 break
+        # for _ in range(50):
+        #     try:
+        #         for i in range(1, 3):
+        #             if i==3: runner.wait(0.1)
+        #             x, y = pag.locateCenterOnScreen(f"../imgs/shop_cider_{i}.png", confidence=0.9)
+        #             runner.move_mouse(x, y, 0.01)
+        #             runner.click(wait=0.12)
+        #         runner.tap(Key.enter, wait=0.18)
+            
+        #     except pag.ImageNotFoundException as e:
+        #         print(e)
+        #         break
 
 
 class PutCiderTask:

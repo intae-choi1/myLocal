@@ -70,10 +70,10 @@ class InputManager:
                 self.automation_manager.start_task(BuyCiderTask())
 
             elif key == Key.insert:
-                return
-                # self.automation_manager.start_task(PutCiderTask())
+                # return
+                self.automation_manager.start_task(PutCiderTask())
                 # self.automation_manager.start_task(CharliTask())
-                self.automation_manager.start_task(DropItemTask())
+                # self.automation_manager.start_task(DropItemTask())
                 
             # 키조합 인식
             # elif self.is_pressed("Key.ctrl_l") and (isinstance(key, KeyCode) and key.vk == 65):

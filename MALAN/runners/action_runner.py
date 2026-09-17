@@ -23,29 +23,29 @@ class ActionRunner:
     def press(self, key, wait=0):
         self._check()
         self.keyboard.press(key)
-        time.sleep(wait)
+        self.wait(wait)
 
     def release(self, key, wait=0):
         self._check()
         self.keyboard.release(key)
-        time.sleep(wait)
+        self.wait(wait)
 
     def tap(self, key, wait=0.25):
         self._check()
         self.keyboard.tap(key)
-        time.sleep(wait)
+        self.wait(wait)
 
     # 마우스 이동
     def move_mouse(self, x, y, wait=0.04):
         self._check()
         self.mouse.position = (x, y)
-        time.sleep(wait)
+        self.wait(wait)
 
     # 클릭
     def click(self, button=mouse.Button.left, count=1, wait=0.04):
         self._check()
         self.mouse.click(button, count)
-        time.sleep(wait)
+        self.wait(wait)
 
     # 더블클릭
     def double_click(self):
@@ -55,19 +55,19 @@ class ActionRunner:
     def scroll(self, dx=0, dy=0, wait=0.04):
         self._check()
         self.mouse.scroll(dx=dx, dy=dy)
-        time.sleep(wait)
+        self.wait(wait)
     
     # 드래그
     def mouse_drag(self, sx, sy, ex, ey, gap=0.05):
         self._check()
         self.mouse.position = (sx, sy)
-        time.sleep(gap)
+        self.wait(gap)
         self.mouse.press(Button.left)
-        time.sleep(gap)
+        self.wait(gap)
         self.mouse.position = (ex, ey)
-        time.sleep(gap)
+        self.wait(gap)
         self.mouse.release(Button.left)
-        time.sleep(gap)
+        self.wait(gap)
 
     def type_text(self, text):
         self._check()
