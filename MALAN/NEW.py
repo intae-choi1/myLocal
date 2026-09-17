@@ -17,6 +17,11 @@ mp_slash_rois = [(796+i*12, 1323, 14, 14) for i in range(4)]
 mp_n_rois = [(784+i*12, 1323, 10, 14) for i in range(4)]
 hp_slash_rois = [(572+i*12, 1323, 14, 14) for i in range(5)]
 hp_n_rois = [(560+i*12, 1323, 10, 14) for i in range(5)]
+
+# mp_slash_rois = [(421+i*6, 1003, 7, 7) for i in range(4)]
+# mp_n_rois = [(415+i*6, 1323, 5, 7) for i in range(4)]
+# hp_slash_rois = [(309+i*6, 1323, 7, 7) for i in range(4)]
+# hp_n_rois = [(303+i*6, 1323, 5, 7) for i in range(4)]
 player_template = cv2.imread("../imgs/mooreung/templates/player.png", cv2.IMREAD_GRAYSCALE)
 monster_template = cv2.imread("../imgs/mooreung/templates/monster.png", cv2.IMREAD_GRAYSCALE)
 slash_template = cv2.imread("../imgs/mooreung/templates/mp_slash.png", cv2.IMREAD_GRAYSCALE)

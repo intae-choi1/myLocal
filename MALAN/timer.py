@@ -7,6 +7,7 @@ from pynput import keyboard
 TIMER_COUNT = 4
 COUNTDOWN_TIME = 120
 ALERT_TIME = 10
+ALERT_TIME = 8
 UPDATE_MS = 50  # 0.1초12
 # TARGET_KEY = keyboard.Key.f2
 TARGET_KEY = keyboard.Key.delete
@@ -82,7 +83,8 @@ class TimerRow:
         if remaining <= ALERT_TIME and not self.alert_played:
             self.alert_played = True
             order = KOREAN_ORDER[self.index + 1]
-            self.speak(f"{order}번째 타이머 10초 남음", 6)
+            # self.speak(f"{order}번째 타이머 10초 남음", 6)
+            self.speak(f"{order}번째 타이머 {ALERT_TIME}초 남음", 6)
 
         self.label.config(text=f"{minutes:02}:{seconds:02}.{tenth}", fg=color)
 
