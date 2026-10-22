@@ -24,7 +24,8 @@ mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) 
 mphp_threshold = 0.9
 
 check_xys = [
-    ((350, 800), (51, 36, 36)), ((525, 800), (24, 24, 21)), ((700, 800), (51, 51, 36)), ((875, 800), (24, 24, 23)), ((1050, 800), (51, 51, 51)), ((1225, 800), (0, 0, 0)), ((1400, 800), (51, 51, 51)), ((1575, 800), (0, 0, 0)),
+    # ((350, 820), (51, 36, 36)), ((525, 820), (24, 24, 21)), ((700, 820), (51, 51, 36)), ((875, 820), (24, 24, 23)), ((1050, 820), (51, 51, 51)), ((1225, 820), (0, 0, 0)), ((1400, 820), (51, 51, 51)), ((1575, 820), (0, 0, 0)),
+    ((350, 820), (0, 0, 17)), ((525, 820), (59, 56, 51)), ((700, 820), (51, 51, 51)), ((875, 820), (53, 61, 51)), ((1050, 820), (62, 57, 51)), ((1225, 820), (68, 51, 51)), ((1400, 820), (68, 51, 51)), ((1575, 820), (57, 51, 51)),
     ((350, 480), (170, 170, 153)), ((525, 480), (41, 51, 34)), ((700, 480), (49, 43, 34)), ((900, 480), (41, 51, 34)), ((1050, 480), (41, 51, 34)), ((1225, 480), (51, 41, 34)), ((1400, 480), (51, 51, 34)), ((1575, 480), (41, 41, 34)),
     ((350, 200), (85, 82, 82)), ((525, 200), (85, 82, 82)), ((700, 200), (85, 82, 82)), ((875, 200), (85, 82, 82)), ((1050, 200), (84, 83, 82)), ((1225, 200), (85, 82, 82)), ((1400, 200), (85, 85, 82)), ((1575, 200), (85, 85, 82)),
 ]
@@ -117,8 +118,8 @@ class Runner:
         self.state = State.ATTACK
         self.substate = None
         self.keys = set()               # 눌린 키 모음 세트
-        self.player = (150, 133)              # 플레이어 위치
-        self.target_x = 150
+        self.player = (152, 133)              # 플레이어 위치
+        self.target_x = 152
 
         self.acting = False             # 액션이 진행중인지 확인용
         self.action_start = 0           # 액션 시간 기록용
@@ -156,7 +157,7 @@ class Runner:
         return False
 
     def check_tudo(self, screenshot):
-        x, y = 1800, 750
+        x, y = 1850, 750
         bgr = [0, 0, 0]
         if not np.array_equal(screenshot[y, x], bgr):
             if time.monotonic() > self.discord_alert_time + 3: 
@@ -171,7 +172,6 @@ class Runner:
             x, y = check_xy[0]
             bgr = check_xy[1]
             if not np.array_equal(screenshot[y, x], bgr):
-                print(x, y, screenshot[y, x], bgr)
                 if time.monotonic() > self.discord_alert_time + 15: 
                     self.discord_alert_time = time.monotonic()
                     requests.post(discord_url, json={"content": f"{x, y, screenshot[y, x].tolist(), bgr} 고통"})
@@ -180,11 +180,11 @@ class Runner:
 
 
     def update(self, screenshot):
-        self.check_tudo(screenshot)
-        self.check_geotam(screenshot)
-        
         mp = get_mp(screenshot)
         player_x, player_y = get_player(screenshot)
+
+        self.check_tudo(screenshot)
+        self.check_geotam(screenshot)
 
         if player_x is not None:
             self.player = (player_x, player_y)
@@ -192,24 +192,26 @@ class Runner:
         # print(self.state.name)
         # print(self.player, mp)
 
-        if time.monotonic() > self.move_x_time + 120:
-            self.target_x = 128 if self.target_x == 150 else 150
+        if time.monotonic() > self.move_x_time + 10:
+            self.target_x = 135 if self.target_x == 152 else 152
+            self.move_x_time = time.monotonic()
 
         # if self.state < State.CHARGE_MP and mp < 200:
         #     self.action_done()
         #     self.state = State.CHARGE_MP
         #     return
 
-        if self.state < State.MOVING and (player_x <= self.target_x-10 or player_x >= self.target_x+10):
+        if self.state < State.MOVING and (player_x <= self.target_x-7 or player_x >= self.target_x+7):
             self.action_done()
             self.state = State.MOVING
             return
 
         # if self.state < State.SYMBOL and time.monotonic() > self.buff_start + 51:
-        if self.state < State.SYMBOL and time.monotonic() > self.buff_start + 68:
+        if self.state < State.SYMBOL and time.monotonic() > self.buff_start + 105:
             self.action_done()
             self.state = State.SYMBOL
             self.buff_start = time.monotonic()
+            self.discord_alert_time = time.monotonic()
             return
 
         # if self.state < State.ATTACK2 and time.monotonic() > self.attack_start + 40:

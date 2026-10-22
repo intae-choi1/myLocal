@@ -24,20 +24,24 @@ class ShiftToggleTask:
     def do_origin(self, runner):
         while not runner.stop_controller.is_stopped():
             runner.press(Key.shift_l)
-            runner.wait(51)
+            runner.wait(55)
             runner.release(Key.shift_l)
+            # runner.press(Key.shift_l)
+            # runner.wait(0.15)
+            # runner.release(Key.shift_l)
+            # runner.wait(0.9)
 
     def do_special(self, runner):
         i = 0
         while not runner.stop_controller.is_stopped():
-            if i == 0 or i%3==0:
-                runner.press("e")
-                runner.wait(0.3)
-                runner.release("e")
+            if i%2==0:
+                runner.press("3")
+                runner.wait(0.5)
+                runner.release("3")
                 runner.wait(0.51)
             i+=1
             runner.press(Key.shift_l)
-            runner.wait(47.5)
+            runner.wait(45.5)
             runner.release(Key.shift_l)
             runner.wait(0.55)
 
@@ -47,12 +51,12 @@ class ShiftToggleTask:
             runner.wait(0.45)
 
             runner.press(Key.shift_l)
-            runner.wait(0.6)
+            runner.wait(0.4)
             runner.release(Key.shift_l)
-            runner.wait(0.55)
+            runner.wait(0.6)
             
             runner.press(Key.left)
-            runner.wait(0.1)
+            runner.wait(0.14)
             runner.release(Key.left)
             runner.wait(0.45)
     
@@ -126,7 +130,7 @@ class BuffTask1:
         runner.press(Key.end, 0.2)
         runner.release(Key.end, 0.1)
 
-        runner.press(Key.delete, 1.1)
+        runner.press(Key.delete, 0.4)
         runner.release(Key.delete, 0.1)
 
         runner.press(Key.shift_l, 1.4)
