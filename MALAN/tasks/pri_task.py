@@ -34,10 +34,10 @@ class ShiftToggleTask:
     def do_special(self, runner):
         i = 0
         while not runner.stop_controller.is_stopped():
-            if i%2==0:
-                runner.press("3")
-                runner.wait(0.5)
-                runner.release("3")
+            if i%3==0:
+                runner.press("e")
+                runner.wait(0.3)
+                runner.release("e")
                 runner.wait(0.51)
             i+=1
             runner.press(Key.shift_l)
