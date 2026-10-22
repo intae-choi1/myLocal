@@ -61,13 +61,10 @@ class ActionRunner:
     def mouse_drag(self, sx, sy, ex, ey, gap=0.05):
         self._check()
         self.mouse.position = (sx, sy)
-        self.wait(gap)
         self.mouse.press(Button.left)
         self.wait(gap)
         self.mouse.position = (ex, ey)
-        self.wait(gap)
         self.mouse.release(Button.left)
-        self.wait(gap)
 
     def type_text(self, text):
         self._check()

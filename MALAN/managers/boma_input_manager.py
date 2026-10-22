@@ -2,7 +2,7 @@ from pynput import keyboard
 from pynput.keyboard import Key, KeyCode
 
 from tasks.boma_task import ShiftToggleTask, JumpSkillTask, MovingStormTask
-from tasks.common_task import ChannelChangeTask, FlJumpTask
+from tasks.common_task import ChannelChangeTask, FlJumpTask, LDPTask
 from tasks.item_task import PutCiderTask, CharliTask, DropItemTask, BuyCiderTask
 
 
@@ -38,6 +38,10 @@ class InputManager:
         
         if key == Key.caps_lock:
             self.automation_manager.toggle_task(ShiftToggleTask())
+
+        elif key in (Key.left, Key.right):
+            if self.movingstorm_enabled:
+                self.automation_manager.start_task(MovingStormTask())
         
         elif key == Key.f1:
             return
@@ -54,6 +58,8 @@ class InputManager:
     def on_release(self, key):
         if key == Key.f4: # 종료
             return False
+        elif key == Key.f7:
+            self.movingstorm_enabled = not self.movingstorm_enabled
         elif key == Key.f9: # 정지
             print("긴급 중단")
             self.automation_manager.stop()
@@ -65,8 +71,16 @@ class InputManager:
             if key == Key.f8:
                 # return
                 self.automation_manager.start_task(ChannelChangeTask())
+            
+            elif key == Key.f10:
+                self.automation_manager.start_task(LDPTask(1))
+            
+            elif key == Key.f11:
+                self.automation_manager.start_task(LDPTask(2))
 
             elif key == Key.f12:
+                self.automation_manager.start_task(LDPTask(3))
+            elif key == Key.f6:
                 self.automation_manager.start_task(BuyCiderTask())
 
             elif key == Key.insert:

@@ -30,7 +30,7 @@ class ShiftToggleTask:
     def do_special(self, runner):
         i = 0
         while not runner.stop_controller.is_stopped():
-            if i == 0 or i%3==0:
+            if i%3==0:
                 runner.press("e")
                 runner.wait(0.3)
                 runner.release("e")

@@ -24,7 +24,7 @@ class AutomationManager:
         title = ""
         if window is not None:
             title = window.title
-        return (self.state == AutomationState.IDLE and title.startswith("Maple"))
+        return (self.state == AutomationState.IDLE and (title.startswith("Maple") or title.startswith("흣구리") or title.startswith("토르쿠")))
 
     # ---------------------------------
     # Task 시작
