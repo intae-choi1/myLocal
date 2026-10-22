@@ -10,12 +10,22 @@ from enum import IntEnum, auto
 discord_url = "https://discord.com/api/webhooks/1542561015991115827/Vxq4bf2E9XcNunptL2XEiEJmN79ZLapeRRnOtRZyK0CaQGEzCHwbRkGX0YJuJXmyAuxp"
 pyautogui.PAUSE=.01
 
-monitor = {"left":0, "top":0, "width":1920, "height":1080}
-minimap_roi = (107, 95, 80, 50)
-mp_slash_rois = [(421+i*6, 1003, 7, 7) for i in range(4)]
-mp_n_rois = [(415+i*6, 1003, 5, 7) for i in range(4)]
-hp_slash_rois = [(309+i*6, 1003, 7, 7) for i in range(4)]
-hp_n_rois = [(303+i*6, 1003, 5, 7) for i in range(4)]
+# 랩탑 설정
+# monitor = {"left":0, "top":0, "width":1920, "height":1080}
+# mp_slash_rois = [(421+i*6, 1003, 7, 7) for i in range(4)]
+# mp_n_rois = [(415+i*6, 1003, 5, 7) for i in range(4)]
+# hp_slash_rois = [(309+i*6, 1003, 7, 7) for i in range(4)]
+# hp_n_rois = [(303+i*6, 1003, 5, 7) for i in range(4)]
+# slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
+# mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
+
+
+# 데스크탑 설정
+monitor = {"left":0, "top":0, "width":2560, "height":1440}
+mp_slash_rois = [(796+i*12, 1323, 14, 14) for i in range(4)]
+mp_n_rois = [(784+i*12, 1323, 10, 14) for i in range(4)]
+hp_slash_rois = [(572+i*12, 1323, 14, 14) for i in range(4)]
+hp_n_rois = [(560+i*12, 1323, 10, 14) for i in range(4)]
 slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
 mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
 
@@ -72,7 +82,7 @@ def get_stat(screenshot, slash_rois, number_rois):
         ]
         digits.append(np.argmax(scores))
 
-    return reduce(lambda x,y: x*10+y, digits)
+    return int(reduce(lambda x,y: x*10+y, digits))
 
 def get_mp(screenshot):
     return get_stat(screenshot, mp_slash_rois, mp_n_rois)
@@ -128,14 +138,19 @@ class Runner:
         mp = get_mp(screenshot)
         hp = get_hp(screenshot)
 
+        if mp == -1 or hp == -1:
+            print(f"{mp=} {hp=} 인식 불가")
+            return
 
-        if self.state < State.CHARGE_HP and hp < 1200:
-            print(hp, mp)
+
+        if self.state < State.CHARGE_HP and hp < 1800:
+            print(f"{hp=} 1800 미만")
             self.action_done()
             self.state = State.CHARGE_HP
             return
 
         if self.state < State.CHARGE_MP and mp < 200:
+            print(f"{mp=} 200 미만")
             self.action_done()
             self.state = State.CHARGE_MP
             return
@@ -146,7 +161,7 @@ class Runner:
                 self.press("delete")
                 self.start_action()
                 self.substate = "WAIT"
-            elif self.substate == "WAIT" and self.action_done(0.3):
+            elif self.substate == "WAIT" and self.action_done(0.2):
                 self.release("delete")
                 self.substate = None
                 self.state = State.INIT
@@ -157,7 +172,7 @@ class Runner:
                 self.press("ctrl")
                 self.start_action()
                 self.substate = "WAIT"
-            elif self.substate == "WAIT" and self.action_done(0.3):
+            elif self.substate == "WAIT" and self.action_done(0.2):
                 self.release("ctrl")
                 self.substate = None
                 self.state = State.INIT
@@ -173,6 +188,7 @@ def main():
             while True:
                 screenshot = get_screenshot(sct)
                 runner.update(screenshot)
+                time.sleep(0.01)
 
     except Exception as e:
         raise e
