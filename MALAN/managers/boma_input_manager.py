@@ -76,6 +76,7 @@ class InputManager:
                 self.automation_manager.start_task(LDPTask(1))
             
             elif key == Key.f11:
+            # elif key == Key.tab:
                 self.automation_manager.start_task(LDPTask(2))
 
             elif key == Key.f12:

@@ -4,13 +4,14 @@ import tkinter as tk
 from pynput import keyboard
 
 
-TIMER_COUNT = 4
+TIMER_COUNT = 5
 COUNTDOWN_TIME = 120
 ALERT_TIME = 10
-ALERT_TIME = 8
+ALERT_TIME = 15
 UPDATE_MS = 50  # 0.1초12
 # TARGET_KEY = keyboard.Key.f2
 TARGET_KEY = keyboard.Key.delete
+TARGET_KEY = "c"
 KOREAN_ORDER = ["", "첫", "두", "세", "네", "다섯", "여섯"]
 
 LOOP_TIME = 31.3

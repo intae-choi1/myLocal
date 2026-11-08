@@ -18,6 +18,26 @@ class ChannelChangeTask:
     def run(self, runner):
         # self.do_origin(runner)
         self.do_special(runner)
+        # self.do_temp(runner)
+
+    def do_temp(self, runner):
+        action_start = time.monotonic()
+        while not runner.stop_controller.is_stopped():
+            runner.move_mouse(1224, 653)
+            runner.click()
+            runner.wait(3)
+            runner.move_mouse(1485, 754)
+            runner.click()
+            runner.wait(2)
+            runner.move_mouse(1500,641)
+            runner.click()
+            runner.wait(1)
+            if time.monotonic() > action_start + 120:
+                runner.press(Key.f5)
+                runner.wait(0.1)
+                runner.release(Key.f5)
+                runner.wait(30)
+                action_start = time.monotonic()
     
     def do_origin(self, runner):
         nx = 710 + 140 * 1       # ※※채널 x방향 n번째 ※※
@@ -127,7 +147,7 @@ class LDPTask:
             runner.press(Key.shift_l, 0.05)
             runner.release(Key.shift_l, 0.05)
             if self.num == 2:
-                runner.press("c", 0.05)
+                runner.press("c", 0.15)
                 runner.release("c", 0.05)
 
             self.activate_window("MapleStory Worlds")
@@ -138,6 +158,7 @@ class LDPTask:
             x, y = pag.locateCenterOnScreen(f"../imgs/party_symbol.png", confidence=0.75)
             x1, y1 = x, y+190
             x2, y2 = x+400, y+95
+            x2, y2 = x+200, y+95
             runner.mouse_drag(x1, y1, x2, y2, 0.1)
             runner.wait(1)
 
@@ -159,7 +180,11 @@ class LDPTask:
                 win.restore()
 
             # 창 활성화
-            win.activate()
+            try:
+                win.activate()
+            except:
+                win.minimize()
+                win.restore()
 
             # print(f"활성화 완료: {win.title}")
         else:

@@ -2,12 +2,11 @@ import time
 import cv2
 import pyautogui
 import mss
-import requests
+import pygetwindow as gw
 import numpy as np
 from functools import reduce
 from enum import IntEnum, auto
 
-discord_url = "https://discord.com/api/webhooks/1542561015991115827/Vxq4bf2E9XcNunptL2XEiEJmN79ZLapeRRnOtRZyK0CaQGEzCHwbRkGX0YJuJXmyAuxp"
 pyautogui.PAUSE=.01
 
 # 랩탑 설정
@@ -22,15 +21,20 @@ pyautogui.PAUSE=.01
 
 # 데스크탑 설정
 monitor = {"left":0, "top":0, "width":2560, "height":1440}
-mp_slash_rois = [(796+i*12, 1323, 14, 14) for i in range(4)]
-mp_n_rois = [(784+i*12, 1323, 10, 14) for i in range(4)]
+mp_slash_rois = [(796+i*12, 1323, 14, 14) for i in range(5)]
+mp_n_rois = [(784+i*12, 1323, 10, 14) for i in range(5)]
 hp_slash_rois = [(572+i*12, 1323, 14, 14) for i in range(4)]
 hp_n_rois = [(560+i*12, 1323, 10, 14) for i in range(4)]
 slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
 mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
 
-mphp_threshold = 0.9
+mphp_threshold = 0.8
 
+hp_key = "ctrl"
+mp_key = "delete"
+# mp_key = "alt"
+hp_stand = 1500
+mp_stand = 100
 
 # 화면
 def get_screenshot(sct):
@@ -101,11 +105,12 @@ class Runner:
         self.state = State.INIT
         self.substate = None
         self.keys = set()               # 눌린 키 모음 세트
-
-
+        self.active_key = None
         self.acting = False             # 액션이 진행중인지 확인용
         self.action_start = 0           # 액션 시간 기록용
 
+        self.z_pressed = False
+        self.z_next_change = time.monotonic()
 
     def press(self, key):
         self.keys.add(key)
@@ -125,6 +130,14 @@ class Runner:
         self.action_start = time.monotonic()
         self.acting = True
 
+    def cancel_action(self):
+        if self.active_key is not None:
+            self.release(self.active_key)
+        self.active_key = None
+        self.acting = False
+        self.substate = None
+        
+
     def action_done(self, duration=0):
         if not self.acting:
             return False
@@ -135,6 +148,11 @@ class Runner:
 
 
     def update(self, screenshot):
+        if not self.can_start():
+            self.release_all()
+            return 
+        
+        self.update_z()
         mp = get_mp(screenshot)
         hp = get_hp(screenshot)
 
@@ -143,40 +161,71 @@ class Runner:
             return
 
 
-        if self.state < State.CHARGE_HP and hp < 1800:
-            print(f"{hp=} 1800 미만")
-            self.action_done()
+        if self.state < State.CHARGE_HP and hp < hp_stand:
+            print(f"{hp=}")
+            self.cancel_action()
             self.state = State.CHARGE_HP
             return
 
-        if self.state < State.CHARGE_MP and mp < 200:
-            print(f"{mp=} 200 미만")
-            self.action_done()
+        if self.state < State.CHARGE_MP and mp < mp_stand:
+            print(f"{mp=}")
+            self.cancel_action()
             self.state = State.CHARGE_MP
             return
 
 
         if self.state == State.CHARGE_HP:
             if not self.acting:
-                self.press("delete")
+                self.press(hp_key)
+                self.active_key = hp_key
                 self.start_action()
                 self.substate = "WAIT"
+
             elif self.substate == "WAIT" and self.action_done(0.2):
-                self.release("delete")
+                self.release(self.active_key)
+                self.active_key = None
                 self.substate = None
                 self.state = State.INIT
             return
 
         if self.state == State.CHARGE_MP:
             if not self.acting:
-                self.press("ctrl")
+                self.press(mp_key)
+                self.active_key = mp_key
                 self.start_action()
                 self.substate = "WAIT"
+
             elif self.substate == "WAIT" and self.action_done(0.2):
-                self.release("ctrl")
+                self.release(self.active_key)
+                self.active_key = None
                 self.substate = None
                 self.state = State.INIT
             return
+
+    def update_z(self):
+        now = time.monotonic()
+
+        if now < self.z_next_change:
+            return
+
+        if self.z_pressed:
+            # z를 누른 지 5초 경과 → 2초간 뗌
+            self.release("z")
+            self.z_pressed = False
+            self.z_next_change = now + 0.2
+        else:
+            # z를 뗀 지 2초 경과 → 다시 5초간 누름
+            self.press("z")
+            self.z_pressed = True
+            self.z_next_change = now + 0.2
+
+    def can_start(self):
+        window = gw.getActiveWindow()
+        title = ""
+        if window is not None:
+            title = window.title
+        return title.startswith("Maple")
+
 
 
 def main():

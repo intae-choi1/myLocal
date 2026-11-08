@@ -7,7 +7,7 @@ import numpy as np
 from functools import reduce
 from enum import IntEnum, auto
 
-discord_url = "https://discord.com/api/webhooks/1542561015991115827/Vxq4bf2E9XcNunptL2XEiEJmN79ZLapeRRnOtRZyK0CaQGEzCHwbRkGX0YJuJXmyAuxp"
+discord_url = "https://discord.com/api/webhooks/1568847055307407372/zYHZIexbZq1To4CF4uq6dDIsVk6eFCQaBWEtYRR1-r1CDQaK8rzPgI9k-nMrkiyCvzWQ"
 pyautogui.PAUSE=.01
 TARGET_RGB = np.array([255, 255, 136])
 TARGET_BGR = np.array([136, 255, 255])

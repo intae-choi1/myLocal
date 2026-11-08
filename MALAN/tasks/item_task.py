@@ -21,8 +21,8 @@ class BuyCiderTask:
                 y += random.randrange(-20, 20)
                 runner.move_mouse(x, y, 0.01)
                 runner.click(wait=0.1)
-                runner.click(wait=0.35)
-                runner.tap(Key.enter, wait=0.2)
+                runner.click(wait=0.2)
+                runner.tap(Key.enter, wait=0.1)
             
             except pag.ImageNotFoundException as e:
                 print(e)
@@ -125,7 +125,7 @@ class CharliTask:
             print(e)
 
     def do_special(self, runner):
-        for _ in range(11):
+        for _ in range(20):
             runner.press(".", 0.1)
             runner.release(".", 0.3)
             runner.tap(Key.enter, 0.4)
@@ -135,7 +135,7 @@ class CharliTask:
             ruster = 9
             hector = 13
             white = 16
-            for _ in range(luna):
+            for _ in range(ruster):
                 runner.tap(Key.down, 0.05)
             runner.wait(0.2)
             runner.tap(Key.enter, 0.4)
