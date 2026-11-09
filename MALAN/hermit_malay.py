@@ -2,38 +2,40 @@ import time
 import cv2
 import pyautogui
 import mss
+import requests
 import pygetwindow as gw
 import numpy as np
 from functools import reduce
 from enum import IntEnum, auto
 
 pyautogui.PAUSE=.01
+discord_url = "https://discord.com/api/webhooks/1568847055307407372/zYHZIexbZq1To4CF4uq6dDIsVk6eFCQaBWEtYRR1-r1CDQaK8rzPgI9k-nMrkiyCvzWQ"
 
 # 랩탑 설정
-# monitor = {"left":0, "top":0, "width":1920, "height":1080}
-# mp_slash_rois = [(421+i*6, 1003, 7, 7) for i in range(4)]
-# mp_n_rois = [(415+i*6, 1003, 5, 7) for i in range(4)]
-# hp_slash_rois = [(309+i*6, 1003, 7, 7) for i in range(4)]
-# hp_n_rois = [(303+i*6, 1003, 5, 7) for i in range(4)]
-# slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
-# mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
+monitor = {"left":0, "top":0, "width":1920, "height":1080}
+mp_slash_rois = [(421+i*6, 1003, 7, 7) for i in range(4)]
+mp_n_rois = [(415+i*6, 1003, 5, 7) for i in range(4)]
+hp_slash_rois = [(309+i*6, 1003, 7, 7) for i in range(4)]
+hp_n_rois = [(303+i*6, 1003, 5, 7) for i in range(4)]
+slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
+mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
 
 
 # 데스크탑 설정
-monitor = {"left":0, "top":0, "width":2560, "height":1440}
-mp_slash_rois = [(796+i*12, 1323, 14, 14) for i in range(5)]
-mp_n_rois = [(784+i*12, 1323, 10, 14) for i in range(5)]
-hp_slash_rois = [(572+i*12, 1323, 14, 14) for i in range(4)]
-hp_n_rois = [(560+i*12, 1323, 10, 14) for i in range(4)]
-slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
-mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
+# monitor = {"left":0, "top":0, "width":2560, "height":1440}
+# mp_slash_rois = [(796+i*12, 1323, 14, 14) for i in range(5)]
+# mp_n_rois = [(784+i*12, 1323, 10, 14) for i in range(5)]
+# hp_slash_rois = [(572+i*12, 1323, 14, 14) for i in range(4)]
+# hp_n_rois = [(560+i*12, 1323, 10, 14) for i in range(4)]
+# slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
+# mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
 
 mphp_threshold = 0.8
 
 hp_key = "ctrl"
 mp_key = "delete"
 # mp_key = "alt"
-hp_stand = 1500
+hp_stand = 1000
 mp_stand = 100
 
 # 화면
@@ -94,6 +96,13 @@ def get_mp(screenshot):
 def get_hp(screenshot):
     return get_stat(screenshot, hp_slash_rois, hp_n_rois)
 
+def can_start():
+    window = gw.getActiveWindow()
+    title = ""
+    if window is not None:
+        title = window.title
+    return title.startswith("Maple")
+
 
 class State(IntEnum):
     INIT = auto()
@@ -111,6 +120,7 @@ class Runner:
 
         self.z_pressed = False
         self.z_next_change = time.monotonic()
+        self.discord_alert_time = time.monotonic()
 
     def press(self, key):
         self.keys.add(key)
@@ -148,11 +158,9 @@ class Runner:
 
 
     def update(self, screenshot):
-        if not self.can_start():
-            self.release_all()
-            return 
+        self.check_tudo(screenshot)
         
-        self.update_z()
+        # self.update_z()
         mp = get_mp(screenshot)
         hp = get_hp(screenshot)
 
@@ -219,12 +227,15 @@ class Runner:
             self.z_pressed = True
             self.z_next_change = now + 0.2
 
-    def can_start(self):
-        window = gw.getActiveWindow()
-        title = ""
-        if window is not None:
-            title = window.title
-        return title.startswith("Maple")
+
+    def check_tudo(self, screenshot):
+        x, y = 1890, 750
+        bgr = [0, 0, 0]
+        if not np.array_equal(screenshot[y, x], bgr):
+            if time.monotonic() > self.discord_alert_time + 3: 
+                self.discord_alert_time = time.monotonic()
+                requests.post(discord_url, json={"content": "투도"})
+        return 
 
 
 
@@ -235,9 +246,12 @@ def main():
     try:
         with mss.MSS() as sct:
             while True:
+                time.sleep(0.01)
+                if not can_start():
+                    runner.release_all()
+                    continue 
                 screenshot = get_screenshot(sct)
                 runner.update(screenshot)
-                time.sleep(0.01)
 
     except Exception as e:
         raise e
