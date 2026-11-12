@@ -12,23 +12,23 @@ pyautogui.PAUSE=.01
 discord_url = "https://discord.com/api/webhooks/1568847055307407372/zYHZIexbZq1To4CF4uq6dDIsVk6eFCQaBWEtYRR1-r1CDQaK8rzPgI9k-nMrkiyCvzWQ"
 
 # 랩탑 설정
-# monitor = {"left":0, "top":0, "width":1920, "height":1080}
-# mp_slash_rois = [(421+i*6, 1003, 7, 7) for i in range(4)]
-# mp_n_rois = [(415+i*6, 1003, 5, 7) for i in range(4)]
-# hp_slash_rois = [(309+i*6, 1003, 7, 7) for i in range(4)]
-# hp_n_rois = [(303+i*6, 1003, 5, 7) for i in range(4)]
-# slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
-# mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
+monitor = {"left":0, "top":0, "width":1920, "height":1080}
+mp_slash_rois = [(421+i*6, 1003, 7, 7) for i in range(4)]
+mp_n_rois = [(415+i*6, 1003, 5, 7) for i in range(4)]
+hp_slash_rois = [(309+i*6, 1003, 7, 7) for i in range(4)]
+hp_n_rois = [(303+i*6, 1003, 5, 7) for i in range(4)]
+slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
+mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
 
 
 # 데스크탑 설정
-monitor = {"left":0, "top":0, "width":2560, "height":1440}
-mp_slash_rois = [(796+i*12, 1323, 14, 14) for i in range(5)]
-mp_n_rois = [(784+i*12, 1323, 10, 14) for i in range(5)]
-hp_slash_rois = [(572+i*12, 1323, 14, 14) for i in range(4)]
-hp_n_rois = [(560+i*12, 1323, 10, 14) for i in range(4)]
-slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
-mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
+# monitor = {"left":0, "top":0, "width":2560, "height":1440}
+# mp_slash_rois = [(796+i*12, 1323, 14, 14) for i in range(5)]
+# mp_n_rois = [(784+i*12, 1323, 10, 14) for i in range(5)]
+# hp_slash_rois = [(572+i*12, 1323, 14, 14) for i in range(4)]
+# hp_n_rois = [(560+i*12, 1323, 10, 14) for i in range(4)]
+# slash_template = cv2.imread("../imgs/templates/mp_slash.png", cv2.IMREAD_COLOR)
+# mphp_templates = [cv2.imread(f"../imgs/templates/mp_{i}.png", cv2.IMREAD_COLOR) for i in range(10)]
 
 mphp_threshold = 0.8
 

@@ -83,14 +83,13 @@ class NotebookChannelChangeTask:
 
 
     def run(self, runner):
-        self.do_origin(runner)
-        # self.do_special(runner)
+        self.do_special(runner)
     
 
     def do_special(self, runner):
         n = 10
-        top = 526 + (10-n) * 42
-        monitor = {"left": 846, "top": top, "width": 1, "height": 1} 
+        top = 438 + (10-n) * 21
+        monitor = {"left": 742, "top": top, "width": 1, "height": 1} 
         # monitor = {"left": 846, "top": 610, "width": 1, "height": 1} # 채널 10줄안되면 수정해서 사용 6줄일때 846,610
         while not runner.stop_controller.is_stopped():
             runner.tap(Key.esc, 0.1)
@@ -99,7 +98,7 @@ class NotebookChannelChangeTask:
             img = sct.grab(monitor)
             color = img.pixel(0, 0)  # (R, G, B)
             print(color)
-            if np.all(np.array(color) -np.array((204, 204, 187)) < 10):
+            if np.all(np.array(color) -np.array((205, 205, 189)) < 10):
                 runner.tap(Key.enter, 0.1)
                 print("채널찾기종료")
                 break
