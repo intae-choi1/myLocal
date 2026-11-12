@@ -57,10 +57,10 @@ class ChannelChangeTask:
 
 
     def do_special(self, runner):
-        n = 7
-        top = 526 + (10-n) * 21
-        # monitor = {"left": 846, "top": 610, "width": 1, "height": 1} # 채널 10줄안되면 수정해서 사용 6줄일때 846,610
+        n = 10
+        top = 526 + (10-n) * 42
         monitor = {"left": 846, "top": top, "width": 1, "height": 1} 
+        # monitor = {"left": 846, "top": 610, "width": 1, "height": 1} # 채널 10줄안되면 수정해서 사용 6줄일때 846,610
         while not runner.stop_controller.is_stopped():
             runner.tap(Key.esc, 0.1)
             runner.tap(Key.enter, 0.4)
@@ -81,37 +81,25 @@ class NotebookChannelChangeTask:
     def __init__(self):
         pass
 
+
     def run(self, runner):
         self.do_origin(runner)
         # self.do_special(runner)
     
-    def do_origin(self, runner):
-        nx = 975 + 70 * 3       # ※※채널 x방향 n번째 ※※
-        ny = 550 + 21 * 10  # ※※채널 y방향 n번째 ※※
-        while not runner.stop_controller.is_stopped():
-            rx = random.randrange(0, 50)
-            ry = random.randrange(0, 11)
-            
-            runner.tap(Key.esc, 0.1)
-            runner.tap(Key.enter, 0.4)
-
-            runner.move_mouse(nx+rx, ny+ry, 0)    # ※※채널※※
-            runner.click()
-            
-            runner.tap(Key.enter, 0.1)
-            runner.tap(Key.esc, 0.1)
-
 
     def do_special(self, runner):
-        monitor = {"left": 1100, "top": 585, "width": 1, "height": 1}
-        # monitor = {"left": xx, "top": yy, "width": 1, "height": 1} # 채널 10줄안되면 수정해서 사용
+        n = 10
+        top = 526 + (10-n) * 42
+        monitor = {"left": 846, "top": top, "width": 1, "height": 1} 
+        # monitor = {"left": 846, "top": 610, "width": 1, "height": 1} # 채널 10줄안되면 수정해서 사용 6줄일때 846,610
         while not runner.stop_controller.is_stopped():
             runner.tap(Key.esc, 0.1)
             runner.tap(Key.enter, 0.4)
             runner.tap(Key.right, 0.2)
             img = sct.grab(monitor)
             color = img.pixel(0, 0)  # (R, G, B)
-            if color == (221, 221, 221):
+            print(color)
+            if np.all(np.array(color) -np.array((204, 204, 187)) < 10):
                 runner.tap(Key.enter, 0.1)
                 print("채널찾기종료")
                 break
@@ -153,21 +141,21 @@ class LDPTask:
             self.activate_window("MapleStory Worlds")
 
         elif self.num == 3:
-            runner.press("[", 0.1)
-            runner.release("[", 0.05)
-            x, y = pag.locateCenterOnScreen(f"../imgs/party_symbol.png", confidence=0.75)
-            x1, y1 = x, y+190
-            x2, y2 = x+400, y+95
-            x2, y2 = x+200, y+95
-            runner.mouse_drag(x1, y1, x2, y2, 0.1)
-            runner.wait(1)
+            # runner.press("[", 0.1)
+            # runner.release("[", 0.05)
+            # x, y = pag.locateCenterOnScreen(f"../imgs/party_symbol.png", confidence=0.75)
+            # x1, y1 = x, y+190
+            # x2, y2 = x+400, y+95
+            # x2, y2 = x+200, y+95
+            # runner.mouse_drag(x1, y1, x2, y2, 0.1)
+            # runner.wait(1)
 
             self.activate_window("흣구리")
             runner.press("r", 0.1)
             runner.release("r", 0.05)
             self.activate_window("MapleStory Worlds")
             runner.wait(0.8)
-            runner.mouse_drag(x2, y2, x1, y1, 0.1)
+            # runner.mouse_drag(x2, y2, x1, y1, 0.1)
 
 
     def activate_window(self, title):
@@ -185,6 +173,7 @@ class LDPTask:
             except:
                 win.minimize()
                 win.restore()
+                win.maximize()
 
             # print(f"활성화 완료: {win.title}")
         else:
